@@ -351,7 +351,8 @@ a {
 }
 
 .bg-image-contact {
-    background-image: url('https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=1920&q=80');
+    background-image: url('IMG_20260218_224318000_HDR_PORTRAIT~2.jpg');
+    background-position: left center;
 }
 
 /* Origin List */
