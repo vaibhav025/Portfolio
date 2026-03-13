@@ -352,7 +352,7 @@ a {
 
 .bg-image-contact {
     background-image: url('IMG_20260218_224318000_HDR_PORTRAIT~2.jpg');
-    background-position: left center;
+    background-position: 45% center;
 }
 
 /* Origin List */
@@ -641,6 +641,22 @@ a {
     .text-content {
         padding: 2rem 1.5rem;
     }
+     /* 1. Turn off parallax on mobile (stops the extreme zooming) */
+    .parallax {
+        background-attachment: scroll; 
+    }
+
+    /* 2. Shift the contact image to focus on your face */
+    .bg-image-contact {
+        /* The 25% focuses on the left-center where you are standing. 
+           You can tweak this number (e.g., 20% or 30%) to slide it perfectly into view! */
+        background-position: 35% center; 
+    }
+    
+    /* 3. Give the section a bit more top padding so your face isn't completely covered by the text box */
+    #contact {
+        padding-top: 6rem;
+    }
 }
 
 /* --- Mobile Phone Optimization ADDED HERE --- */
@@ -684,5 +700,29 @@ a {
         padding-left: 1.5rem;
     }
 
+    /* ... your other mobile rules ... */
+
+    /* 1. Turn off parallax on mobile (stops the extreme zooming) */
+    .parallax {
+        background-attachment: scroll; 
+    }
+
+    /* 2. Shift the contact image to focus on your face */
+    .bg-image-contact {
+        /* The 25% focuses on the left-center where you are standing. 
+           You can tweak this number (e.g., 20% or 30%) to slide it perfectly into view! */
+        background-position: 35% center; 
+    }
     
+    /* 3. Give the section a bit more top padding so your face isn't completely covered by the text box */
+    #contact {
+        padding-top: 6rem;
+    }
+}
+
+/* --- Fix for Mobile "Desktop Site" Parallax Bug --- */
+@media (hover: none) {
+    .parallax {
+        background-attachment: scroll !important;
+    }
 }
