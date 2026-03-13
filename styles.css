@@ -343,7 +343,9 @@ a {
 }
 
 .bg-image-origin {
-    background-image: url('https://images.unsplash.com/photo-1552820728-8b83bb6b773f?auto=format&fit=crop&w=1920&q=80');
+    
+    background-image: url('IMG-20250813-WA0222.jpg');
+    background-position: 60% center;
 }
 
 .bg-image-exp {
@@ -607,6 +609,12 @@ a {
     .feature-list li {
         justify-content: flex-start;
     }
+
+    .bg-image-origin {
+        /* The 25% focuses on the left-center where you are standing. 
+           You can tweak this number (e.g., 20% or 30%) to slide it perfectly into view! */
+        background-position: 45% center; 
+    }
     
     /* ... rest of your mobile rules ... */
 }
@@ -651,6 +659,12 @@ a {
         /* The 25% focuses on the left-center where you are standing. 
            You can tweak this number (e.g., 20% or 30%) to slide it perfectly into view! */
         background-position: 35% center; 
+    }
+
+    .bg-image-origin {
+        /* The 25% focuses on the left-center where you are standing. 
+           You can tweak this number (e.g., 20% or 30%) to slide it perfectly into view! */
+        background-position: 45% center; 
     }
     
     /* 3. Give the section a bit more top padding so your face isn't completely covered by the text box */
@@ -714,6 +728,12 @@ a {
         background-position: 35% center; 
     }
     
+    .bg-image-origin {
+        /* The 25% focuses on the left-center where you are standing. 
+           You can tweak this number (e.g., 20% or 30%) to slide it perfectly into view! */
+        background-position: 45% center; 
+    }
+
     /* 3. Give the section a bit more top padding so your face isn't completely covered by the text box */
     #contact {
         padding-top: 6rem;
