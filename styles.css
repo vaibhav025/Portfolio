@@ -364,16 +364,16 @@ a {
     margin-bottom: 0.8rem;
     color: var(--text-light);
     font-size: 1.125rem;
-    display: flex;
-    align-items: baseline;
-    justify-content: flex-start; /* Add this line to align items to the right */
+    display: block; /* Removed flexbox to allow natural text wrapping */
+    line-height: 1.6;
 }
 
 .feature-list li::before {
     content: '→';
     color: var(--accent-yellow);
-    margin-right: 0.8rem;
+    margin-right: 0.5rem; /* Added spacing here instead */
     font-weight: bold;
+    display: inline-block;
 }
 
 /* Timeline */
@@ -594,6 +594,20 @@ a {
     .portfolio-grid {
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     }
+
+    /* ... your other mobile rules are here ... */
+
+    .align-right,
+    .text-right {
+        text-align: left;
+    }
+
+    /* Add this new rule to fix the list alignment on mobile: */
+    .feature-list li {
+        justify-content: flex-start;
+    }
+    
+    /* ... rest of your mobile rules ... */
 }
 
 @media screen and (max-width: 768px) {
@@ -626,4 +640,48 @@ a {
     .text-content {
         padding: 2rem 1.5rem;
     }
+}
+
+/* --- Mobile Phone Optimization ADDED HERE --- */
+@media screen and (max-width: 480px) {
+    /* Scale down the massive titles so they don't break the screen width */
+    .hero .title {
+        font-size: clamp(2.5rem, 10vw, 4rem); 
+    }
+    
+    h2 {
+        font-size: clamp(2rem, 8vw, 2.5rem);
+    }
+    
+    .massive-title {
+        font-size: clamp(2rem, 8vw, 3rem);
+    }
+
+    /* Reduce padding to give text more breathing room on small screens */
+    .text-content {
+        padding: 1.5rem 1rem; 
+    }
+    
+    .section-padding, .hero {
+        padding: 3rem 0;
+    }
+
+    /* Stack buttons neatly on top of each other */
+    .cta-group {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .btn {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 0.5rem;
+    }
+
+    /* Ensure the timeline circles align properly with smaller padding */
+    .timeline-item {
+        padding-left: 1.5rem;
+    }
+
+    
 }
