@@ -343,7 +343,7 @@ a {
 }
 
 .bg-image-origin {
-    
+
     background-image: url('IMG-20250813-WA0222.jpg');
     background-position: 60% center;
 }
@@ -367,14 +367,16 @@ a {
     margin-bottom: 0.8rem;
     color: var(--text-light);
     font-size: 1.125rem;
-    display: block; /* Removed flexbox to allow natural text wrapping */
+    display: block;
+    /* Removed flexbox to allow natural text wrapping */
     line-height: 1.6;
 }
 
 .feature-list li::before {
     content: '→';
     color: var(--accent-yellow);
-    margin-right: 0.5rem; /* Added spacing here instead */
+    margin-right: 0.5rem;
+    /* Added spacing here instead */
     font-weight: bold;
     display: inline-block;
 }
@@ -613,9 +615,9 @@ a {
     .bg-image-origin {
         /* The 25% focuses on the left-center where you are standing. 
            You can tweak this number (e.g., 20% or 30%) to slide it perfectly into view! */
-        background-position: 45% center; 
+        background-position: 45% center;
     }
-    
+
     /* ... rest of your mobile rules ... */
 }
 
@@ -649,24 +651,25 @@ a {
     .text-content {
         padding: 2rem 1.5rem;
     }
-     /* 1. Turn off parallax on mobile (stops the extreme zooming) */
+
+    /* 1. Turn off parallax on mobile (stops the extreme zooming) */
     .parallax {
-        background-attachment: scroll; 
+        background-attachment: scroll;
     }
 
     /* 2. Shift the contact image to focus on your face */
     .bg-image-contact {
         /* The 25% focuses on the left-center where you are standing. 
            You can tweak this number (e.g., 20% or 30%) to slide it perfectly into view! */
-        background-position: 35% center; 
+        background-position: 35% center;
     }
 
     .bg-image-origin {
         /* The 25% focuses on the left-center where you are standing. 
            You can tweak this number (e.g., 20% or 30%) to slide it perfectly into view! */
-        background-position: 45% center; 
+        background-position: 45% center;
     }
-    
+
     /* 3. Give the section a bit more top padding so your face isn't completely covered by the text box */
     #contact {
         padding-top: 6rem;
@@ -675,25 +678,27 @@ a {
 
 /* --- Mobile Phone Optimization ADDED HERE --- */
 @media screen and (max-width: 480px) {
+
     /* Scale down the massive titles so they don't break the screen width */
     .hero .title {
-        font-size: clamp(2.5rem, 10vw, 4rem); 
+        font-size: clamp(2.5rem, 10vw, 4rem);
     }
-    
+
     h2 {
         font-size: clamp(2rem, 8vw, 2.5rem);
     }
-    
+
     .massive-title {
         font-size: clamp(2rem, 8vw, 3rem);
     }
 
     /* Reduce padding to give text more breathing room on small screens */
     .text-content {
-        padding: 1.5rem 1rem; 
+        padding: 1.5rem 1rem;
     }
-    
-    .section-padding, .hero {
+
+    .section-padding,
+    .hero {
         padding: 3rem 0;
     }
 
@@ -702,7 +707,7 @@ a {
         flex-direction: column;
         width: 100%;
     }
-    
+
     .btn {
         width: 100%;
         text-align: center;
@@ -718,20 +723,20 @@ a {
 
     /* 1. Turn off parallax on mobile (stops the extreme zooming) */
     .parallax {
-        background-attachment: scroll; 
+        background-attachment: scroll;
     }
 
     /* 2. Shift the contact image to focus on your face */
     .bg-image-contact {
         /* The 25% focuses on the left-center where you are standing. 
            You can tweak this number (e.g., 20% or 30%) to slide it perfectly into view! */
-        background-position: 35% center; 
+        background-position: 35% center;
     }
-    
+
     .bg-image-origin {
         /* The 25% focuses on the left-center where you are standing. 
            You can tweak this number (e.g., 20% or 30%) to slide it perfectly into view! */
-        background-position: 45% center; 
+        background-position: 45% center;
     }
 
     /* 3. Give the section a bit more top padding so your face isn't completely covered by the text box */
@@ -744,5 +749,725 @@ a {
 @media (hover: none) {
     .parallax {
         background-attachment: scroll !important;
+    }
+}
+
+/* ================================================================
+   CINEMATIC EDITS SECTION
+================================================================ */
+
+/* -- Custom Cursor -- */
+* {
+    cursor: none !important;
+}
+
+#cursor-dot {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99999;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #facc15;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    transition: width 0.2s, height 0.2s, background 0.2s;
+    will-change: transform;
+}
+
+#cursor-ring {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99998;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(250, 204, 21, 0.7);
+    pointer-events: none;
+    will-change: transform;
+    transition: width 0.3s, height 0.3s, border-color 0.3s, background 0.3s;
+}
+
+#cursor-ring.play-mode {
+    width: 64px;
+    height: 64px;
+    background: rgba(250, 204, 21, 0.1);
+    border-color: #facc15;
+}
+
+#cursor-text {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99997;
+    font-size: 0.55rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    color: #fde68a;
+    pointer-events: none;
+    opacity: 0;
+    text-transform: uppercase;
+    transition: opacity 0.2s;
+    will-change: transform;
+}
+
+#cursor-text.visible {
+    opacity: 1;
+}
+
+/* -- Section shell -- */
+.edits-section {
+    position: relative;
+    background: #0d0d0d;
+    overflow: clip;
+    padding-bottom: 8rem;
+}
+
+/* -- Ambient orbs -- */
+.edits-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.55;
+}
+
+.orb-1 {
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(250, 204, 21, 0.55) 0%, transparent 70%);
+    top: -100px;
+    left: -150px;
+}
+
+.orb-2 {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(245, 158, 11, 0.45) 0%, transparent 70%);
+    bottom: 0;
+    right: -100px;
+}
+
+.orb-3 {
+    width: 350px;
+    height: 350px;
+    background: radial-gradient(circle, rgba(251, 191, 36, 0.3) 0%, transparent 70%);
+    top: 40%;
+    left: 50%;
+}
+
+/* CSS noise texture overlay */
+.noise-overlay {
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    background-size: 200px 200px;
+    opacity: 0.35;
+    pointer-events: none;
+}
+
+/* -- Intro Header -- */
+.edits-intro {
+    position: relative;
+    z-index: 2;
+    padding: 7rem 6% 4rem;
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+.edits-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    color: #facc15;
+    text-transform: uppercase;
+    margin-bottom: 1.8rem;
+}
+
+.edits-main-title {
+    font-family: 'Bebas Neue', 'Inter', sans-serif;
+    font-size: clamp(5rem, 14vw, 13rem);
+    line-height: 0.92;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    color: #fff;
+    margin: 0 0 2rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.title-mask {
+    overflow: hidden;
+    display: block;
+}
+
+.title-inner {
+    display: block;
+    background: linear-gradient(135deg, #fff 30%, #fde68a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.edits-tagline {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.5);
+    letter-spacing: 0.04em;
+    margin: 0 0 2.5rem;
+}
+
+.tagline-mask {
+    overflow: hidden;
+    display: inline-block;
+}
+
+.tagline-inner {
+    display: inline-block;
+}
+
+.edits-divider {
+    height: 1px;
+    width: 100%;
+    background: linear-gradient(90deg, #facc15 → rgba(250, 204, 21, 0.1), rgba(99, 102, 241, 0.1) 60%, transparent);
+}
+
+/* -- Featured Hero Showcase -- */
+.edits-hero-showcase {
+    position: relative;
+    z-index: 2;
+    margin: 0 6% 5rem;
+    border-radius: 20px;
+    overflow: hidden;
+    min-height: 420px;
+    background:
+        linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(124, 58, 237, 0.05) 50%, rgba(14, 165, 233, 0.05) 100%),
+        linear-gradient(180deg, #0d0d1a 0%, #080810 100%);
+    border: 1px solid rgba(250, 204, 21, 0.15);
+    box-shadow: 0 0 80px rgba(250, 204, 21, 0.07), 0 30px 60px rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    padding: 4rem;
+}
+
+/* Film grain overlay on hero */
+.hero-film-grain {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.08'/%3E%3C/svg%3E");
+    background-size: 150px 150px;
+    animation: grain 0.8s steps(1) infinite;
+}
+
+@keyframes grain {
+
+    0%,
+    100% {
+        background-position: 0 0;
+    }
+
+    10% {
+        background-position: -5% -10%;
+    }
+
+    20% {
+        background-position: -15% 5%;
+    }
+
+    30% {
+        background-position: 7% -25%;
+    }
+
+    40% {
+        background-position: 20% 10%;
+    }
+
+    50% {
+        background-position: -5% 15%;
+    }
+
+    60% {
+        background-position: 15% 0%;
+    }
+
+    70% {
+        background-position: 0% 10%;
+    }
+
+    80% {
+        background-position: -20% -5%;
+    }
+
+    90% {
+        background-position: 10% 5%;
+    }
+}
+
+.hero-content-wrap {
+    position: relative;
+    z-index: 3;
+    flex: 1;
+}
+
+.hero-badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: #fde68a;
+    text-transform: uppercase;
+    border: 1px solid rgba(250, 204, 21, 0.35);
+    padding: 0.35rem 0.9rem;
+    border-radius: 30px;
+    margin-bottom: 1.5rem;
+    background: rgba(99, 102, 241, 0.08);
+}
+
+.hero-showcase-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.5rem, 9vw, 7.5rem);
+    line-height: 0.9;
+    font-weight: 400;
+    color: #fff;
+    text-transform: uppercase;
+    margin: 0 0 1rem;
+    letter-spacing: 0.02em;
+}
+
+.hero-showcase-title em {
+    font-style: normal;
+    background: linear-gradient(90deg, #facc15, #fde68a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero-showcase-sub {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.4);
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    margin: 0 0 1.5rem;
+}
+
+.hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.htag {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #fde68a;
+    background: rgba(99, 102, 241, 0.12);
+    border: 1px solid rgba(99, 102, 241, 0.25);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+}
+
+.hero-watch-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    background: linear-gradient(135deg, #facc15, #f59e0b);
+    color: #000;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.9rem 2rem;
+    border-radius: 50px;
+    text-decoration: none;
+    border: none;
+    box-shadow: 0 8px 30px rgba(250, 204, 21, 0.3);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.hero-watch-btn:hover {
+    box-shadow: 0 12px 40px rgba(99, 102, 241, 0.6);
+}
+
+.play-icon {
+    font-size: 0.8rem;
+}
+
+.hero-number {
+    position: absolute;
+    right: 4rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(6rem, 15vw, 14rem);
+    color: rgba(255, 255, 255, 0.03);
+    line-height: 1;
+    pointer-events: none;
+    z-index: 2;
+    letter-spacing: -0.05em;
+    user-select: none;
+}
+
+.hero-progress-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.06);
+    z-index: 3;
+}
+
+.hero-progress-fill {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, #facc15, #f59e0b, #fde68a);
+}
+
+.hero-corner-tag {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: rgba(255, 255, 255, 0.2);
+    text-transform: uppercase;
+    z-index: 3;
+}
+
+/* -- Horizontal Scroll Strip -- */
+.edits-hscroll-wrapper {
+    position: relative;
+    z-index: 2;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    -webkit-overflow-scrolling: touch;
+
+    scrollbar-width: none;
+
+    overscroll-behavior-x: contain;
+
+    cursor: grab;
+    padding: 2rem 0 3rem;
+
+    background: rgba(0, 0, 0, 0.2);
+
+    border-top: 1px solid rgba(99, 102, 241, 0.08);
+
+    border-bottom: 1px solid rgba(99, 102, 241, 0.08);
+}
+
+.edits-hscroll-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+.hscroll-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    color: rgba(255, 255, 255, 0.2);
+    text-transform: uppercase;
+    padding: 0 6%;
+    margin-bottom: 1.5rem;
+}
+
+.hscroll-track {
+    display: flex;
+    gap: 1.5rem;
+    padding: 1rem 6%;
+    width: fit-content;
+    will-change: transform;
+}
+
+/* -- hcard -- */
+.hcard {
+    position: relative;
+    flex-shrink: 0;
+    width: 340px;
+    min-height: 300px;
+    background: rgba(15, 15, 30, 0.85);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 2rem;
+    text-decoration: none;
+    color: inherit;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+    transition: border-color 0.35s, box-shadow 0.35s, transform 0.15s ease-out;
+    transform-style: preserve-3d;
+    will-change: transform;
+}
+
+.hcard:hover {
+    border-color: rgba(250, 204, 21, 0.45);
+    box-shadow: 0 20px 60px rgba(250, 204, 21, 0.1), 0 0 0 1px rgba(250, 204, 21, 0.1);
+}
+
+.featured-hcard {
+    border-color: rgba(245, 158, 11, 0.3);
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.05));
+    width: 400px;
+}
+
+.more-hcard {
+    border-style: dashed;
+    background: transparent;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.more-plus {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 5rem;
+    color: rgba(250, 204, 21, 0.3);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+}
+
+/* Mouse-follow spotlight inside card */
+.hcard-glow {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    border-radius: 16px;
+    transition: background 0.1s;
+}
+
+.hcard-num {
+    position: absolute;
+    top: 1.2rem;
+    right: 1.5rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 4rem;
+    color: rgba(255, 255, 255, 0.04);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+}
+
+.hcard-body {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+}
+
+.hcard-title {
+    font-size: 1.3rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    color: #fff;
+    text-transform: uppercase;
+    margin: 0 0 0.8rem;
+    line-height: 1.2;
+}
+
+.hcard-desc {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.45);
+    font-weight: 300;
+    line-height: 1.6;
+    margin: 0 0 1.2rem;
+}
+
+.hcard-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.hcard-tags span {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #fde68a;
+    background: rgba(99, 102, 241, 0.1);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    padding: 0.25rem 0.6rem;
+    border-radius: 20px;
+}
+
+.hcard-cta {
+    position: relative;
+    z-index: 1;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #facc15;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: color 0.3s;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.hcard:hover .hcard-cta {
+    color: #fde68a;
+}
+
+.play-btn-mini {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: rgba(99, 102, 241, 0.2);
+    font-size: 0.7rem;
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    transition: background 0.3s;
+    padding-left: 4px;
+}
+
+.hcard:hover .play-btn-mini {
+    background: rgba(99, 102, 241, 0.5);
+}
+
+/* -- Bottom CTA -- */
+.edits-bottom-cta {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 5rem 6% 0;
+}
+
+.bottom-cta-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2rem, 5vw, 4rem);
+    color: rgba(255, 255, 255, 0.12);
+    letter-spacing: 0.08em;
+    margin: 0 0 2rem;
+    font-weight: 400;
+}
+
+.btn-cinematic {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #000;
+    text-decoration: none;
+    border: 1px solid rgba(250, 204, 21, 0.7);
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
+    background: #facc15;
+    backdrop-filter: blur(10px);
+    transition: background 0.3s, border-color 0.3s, box-shadow 0.3s, transform 0.2s;
+}
+
+.btn-cinematic:hover {
+    background: rgba(99, 102, 241, 0.2);
+    border-color: rgba(99, 102, 241, 0.8);
+    box-shadow: 0 0 40px rgba(99, 102, 241, 0.25);
+    transform: translateY(-2px);
+}
+
+.btn-arrow {
+    font-size: 1rem;
+    transition: transform 0.3s;
+}
+
+.btn-cinematic:hover .btn-arrow {
+    transform: translate(3px, -3px);
+}
+
+/* ================================================================
+   RESPONSIVE — Cinematic Section
+================================================================ */
+@media (max-width: 900px) {
+    .edits-intro {
+        padding: 5rem 5% 3rem;
+    }
+
+    .edits-hero-showcase {
+        margin: 0 5% 4rem;
+        padding: 3rem;
+        flex-direction: column;
+        align-items: flex-start;
+        min-height: unset;
+    }
+
+    .hero-number {
+        display: none;
+    }
+
+    .edits-hscroll-wrapper {
+        padding: 1.5rem 0 2rem;
+    }
+
+    .hscroll-track {
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        width: 100%;
+        padding: 1rem 5%;
+    }
+
+    .hcard {
+        scroll-snap-align: start;
+    }
+}
+
+@media (max-width: 600px) {
+    .edits-main-title {
+        font-size: clamp(3.5rem, 18vw, 6rem);
+    }
+
+    .hero-showcase-title {
+        font-size: clamp(3rem, 14vw, 5rem);
+    }
+
+    .edits-hero-showcase {
+        padding: 2rem;
+        margin: 0 4% 3rem;
+        border-radius: 14px;
+    }
+
+    .hcard {
+        width: 280px;
+        min-height: 260px;
+        padding: 1.5rem;
+    }
+
+    #cursor-dot,
+    #cursor-ring,
+    #cursor-text {
+        display: none;
+    }
+
+    * {
+        cursor: auto !important;
+    }
+
+    .hero-corner-tag {
+        display: none;
     }
 }

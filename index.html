@@ -10,12 +10,16 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&family=Bebas+Neue&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
+    <!-- Custom Cinematic Cursor -->
+    <div id="cursor-dot"></div>
+    <div id="cursor-ring"></div>
+    <div id="cursor-text">PLAY</div>
     <header class="navbar">
         <div class="logo">VAIBHAV</div>
         <nav class="nav-links">
@@ -129,53 +133,144 @@
             </div>
         </section>
 
-        <!-- Portfolio Tiles Section -->
-        <section id="portfolio" class="section-padding bg-mesh-2">
-            <div class="overlay overlay-gradient"></div>
-            <div class="container section-content center-content">
-                <h2 class="massive-title" data-aos="fade-down" data-aos-duration="800">SOME OF MY EDITS</h2>
-                <p class="subtitle-text" data-aos="fade-up" data-aos-delay="200">(Click on the tiles below to check my
-                    work)</p>
+        <!-- ===== CINEMATIC EDITS SECTION ===== -->
+        <section id="portfolio" class="edits-section">
 
-                <div class="portfolio-grid">
-                    <a href="https://www.instagram.com/ggsipuacm/reel/DQgpKrmD1pK/" class="portfolio-tile"
-                        target="_blank" data-aos="zoom-in-up" data-aos-delay="100" data-tilt data-tilt-max="15"
-                        data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.5">
-                        <h3>DSA BOOTCAMP</h3>
-                        <div class="tile-hover">Watch Video ↗</div>
-                    </a>
-                    <a href="https://www.instagram.com/reel/DUx85gJD0Xt/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" class="portfolio-tile"
-                        target="_blank" data-aos="zoom-in-up" data-aos-delay="200" data-tilt data-tilt-max="15"
-                        data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.5">
-                        <h3>GALACTICA TEASER</h3>
-                        <div class="tile-hover">Watch Video ↗</div>
-                    </a>
-                    <a href="https://www.instagram.com/reel/DUS--v_j3gt/?igsh=MWxhZTBleXlkb3BpbA==" class="portfolio-tile"
-                        target="_blank" data-aos="zoom-in-up" data-aos-delay="300" data-tilt data-tilt-max="15"
-                        data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.5">
-                        <h3>FEST TEAM REVEAL</h3>
-                        <div class="tile-hover">Watch Video ↗</div>
-                    </a>
-                    <a href="https://www.instagram.com/_being_vaibhav/reel/DPGgqY4k6MC/" class="portfolio-tile"
-                        target="_blank" data-aos="zoom-in-up" data-aos-delay="400" data-tilt data-tilt-max="15"
-                        data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.5">
-                        <h3>AGAAZ 5.0</h3>
-                        <div class="tile-hover">Watch Video ↗</div>
-                    </a>
-                    <a href="https://www.instagram.com/reel/DXGsp7fkwHG/?igsh=YXh0MmJzaXFnZnIy" class="portfolio-tile"
-                        target="_blank" data-aos="zoom-in-up" data-aos-delay="500" data-tilt data-tilt-max="15"
-                        data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.5">
-                        <h3>TECH WEEK TEASER</h3>
-                        <div class="tile-hover">Watch Video ↗</div>
-                    </a>
-                    <a href="https://drive.google.com/drive/folders/1qqXdHhLMPiL5gxFGJn-bHug9TgNJIUR_?usp=sharing"
-                        class="portfolio-tile" target="_blank" data-aos="zoom-in-up" data-aos-delay="600" data-tilt
-                        data-tilt-max="15" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.5">
-                        <h3>MORE...</h3>
-                        <div class="tile-hover">View Drive ↗</div>
+            <!-- Ambient background orbs -->
+            <div class="edits-bg">
+                <div class="orb orb-1"></div>
+                <div class="orb orb-2"></div>
+                <div class="orb orb-3"></div>
+                <div class="noise-overlay"></div>
+            </div>
+
+            <!-- ── INTRO HEADER ── -->
+            <div class="edits-intro">
+                <div class="edits-label">PORTFOLIO / EDITS</div>
+                <h2 class="edits-main-title">
+                    <span class="title-mask"><span class="title-inner">SOME OF</span></span>
+                    <span class="title-mask"><span class="title-inner">MY EDITS</span></span>
+                </h2>
+                <p class="edits-tagline">
+                    <span class="tagline-mask"><span class="tagline-inner">Turning raw clips into cinematic stories.</span></span>
+                </p>
+                <div class="edits-divider"></div>
+            </div>
+
+            <!-- ── FEATURED HERO SHOWCASE ── -->
+            <div class="edits-hero-showcase">
+                <div class="hero-film-grain"></div>
+                <div class="hero-content-wrap">
+                    <div class="hero-badge">✦ FEATURED EDIT</div>
+                    <h3 class="hero-showcase-title">GALACTICA<br><em>TEASER</em></h3>
+                    <p class="hero-showcase-sub">Motion Design · Color Grading · Velocity Edit</p>
+                    <div class="hero-tags">
+                        <span class="htag">Capcut Pro PC</span>
+                        <span class="htag">Cinematic</span>
+                        <span class="htag">Color Grading</span>
+                    </div>
+                    <a href="https://www.instagram.com/reel/DUx85gJD0Xt/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" target="_blank" class="hero-watch-btn" id="hero-watch-btn">
+                        <span class="play-icon">▶</span>
+                        <span>Watch Edit</span>
                     </a>
                 </div>
+                <div class="hero-number">01</div>
+                <div class="hero-progress-bar"><div class="hero-progress-fill"></div></div>
+                <div class="hero-corner-tag">GGSIPUACM × VAIBHAV</div>
             </div>
+
+            <!-- ── HORIZONTAL SCROLL STRIP ── -->
+            <div class="edits-hscroll-wrapper">
+                <div class="hscroll-label">SCROLL TO EXPLORE →</div>
+                <div class="hscroll-track" id="hscroll-track">
+
+                    <a href="https://www.instagram.com/ggsipuacm/reel/DQgpKrmD1pK/" target="_blank" class="hcard" data-index="01">
+                        <div class="hcard-glow"></div>
+                        <div class="hcard-num">01</div>
+                        <div class="hcard-body">
+                            <h4 class="hcard-title">DSA BOOTCAMP</h4>
+                            <p class="hcard-desc">Energetic event highlights reel with dynamic motion graphics and kinetic typography.</p>
+                            <div class="hcard-tags">
+                                <span>Capcut Pro PC</span>
+                            </div>
+                        </div>
+                        <div class="hcard-cta"><span class="play-btn-mini">▶</span> Watch Edit</div>
+                    </a>
+
+                    <a href="https://www.instagram.com/reel/DUx85gJD0Xt/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" target="_blank" class="hcard featured-hcard" data-index="02">
+                        <div class="hcard-glow"></div>
+                        <div class="hcard-num">02</div>
+                        <div class="hcard-body">
+                            <h4 class="hcard-title">GALACTICA TEASER</h4>
+                            <p class="hcard-desc">Cinematic teaser with color grading, velocity edits, and epic sound design.</p>
+                            <div class="hcard-tags">
+                                <span>Capcut Pro PC</span><span>Masking</span><span>Gaming</span>
+                            </div>
+                        </div>
+                        <div class="hcard-cta"><span class="play-btn-mini">▶</span> Watch Edit</div>
+                    </a>
+
+                    <a href="https://www.instagram.com/reel/DUS--v_j3gt/?igsh=MWxhZTBleXlkb3BpbA==" target="_blank" class="hcard" data-index="03">
+                        <div class="hcard-glow"></div>
+                        <div class="hcard-num">03</div>
+                        <div class="hcard-body">
+                            <h4 class="hcard-title">FEST TEAM REVEAL</h4>
+                            <p class="hcard-desc">Dramatic team announcement with masked transitions and high-energy cuts.</p>
+                            <div class="hcard-tags">
+                                <span>Capcut Pro PC</span><span>VFX</span><span>Typography</span>
+                            </div>
+                        </div>
+                        <div class="hcard-cta"><span class="play-btn-mini">▶</span> Watch Edit</div>
+                    </a>
+
+                    <a href="https://www.instagram.com/_being_vaibhav/reel/DPGgqY4k6MC/" target="_blank" class="hcard" data-index="04">
+                        <div class="hcard-glow"></div>
+                        <div class="hcard-num">04</div>
+                        <div class="hcard-body">
+                            <h4 class="hcard-title">AGAAZ 5.0</h4>
+                            <p class="hcard-desc">Festival promo with bold typography, rhythmic cuts, and vibrant color story.</p>
+                            <div class="hcard-tags">
+                                <span>Capcut Pro PC</span><span>First Edit</span>
+                            </div>
+                        </div>
+                        <div class="hcard-cta"><span class="play-btn-mini">▶</span> Watch Edit</div>
+                    </a>
+
+                    <a href="https://www.instagram.com/reel/DXGsp7fkwHG/?igsh=YXh0MmJzaXFnZnIy" target="_blank" class="hcard" data-index="05">
+                        <div class="hcard-glow"></div>
+                        <div class="hcard-num">05</div>
+                        <div class="hcard-body">
+                            <h4 class="hcard-title">TECH WEEK TEASER</h4>
+                            <p class="hcard-desc">Sleek tech event promo with glitch transitions and futuristic aesthetics.</p>
+                            <div class="hcard-tags">
+                                <span>Capcut Pro PC</span><span>Cinematic</span>
+                            </div>
+                        </div>
+                        <div class="hcard-cta"><span class="play-btn-mini">▶</span> Watch Edit</div>
+                    </a>
+
+                    <a href="https://drive.google.com/drive/folders/1qqXdHhLMPiL5gxFGJn-bHug9TgNJIUR_?usp=sharing" target="_blank" class="hcard more-hcard" data-index="+">
+                        <div class="hcard-glow"></div>
+                        <div class="more-plus">+</div>
+                        <div class="hcard-body">
+                            <h4 class="hcard-title">VIEW ALL</h4>
+                            <p class="hcard-desc">Explore the full collection of cinematic edits on Google Drive.</p>
+                        </div>
+                        <div class="hcard-cta"><span class="play-btn-mini">↗</span> Open Drive</div>
+                    </a>
+
+                </div>
+            </div>
+
+            <!-- ── BOTTOM CTA ── -->
+            <div class="edits-bottom-cta">
+                <p class="bottom-cta-text">Every frame tells a story.</p>
+                <a href="https://drive.google.com/drive/folders/1qqXdHhLMPiL5gxFGJn-bHug9TgNJIUR_?usp=sharing" target="_blank" class="btn-cinematic">
+                    <span>Explore Full Collection</span>
+                    <span class="btn-arrow">↗</span>
+                </a>
+            </div>
+
         </section>
 
         <!-- Contact Section -->
@@ -230,41 +325,160 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script>
-        AOS.init({
-            once: true,
-            offset: 100,
-            duration: 800,
+        AOS.init({ once: true, offset: 100, duration: 800 });
+
+        VANTA.NET({
+            el: "#home", mouseControls: true, touchControls: true, gyroControls: false,
+            minHeight: 200, minWidth: 200, scale: 1, scaleMobile: 1,
+            color: 0xfacc15, backgroundColor: 0x121212, points: 15, maxDistance: 25, spacing: 20
         });
 
-        // Initialize Vanta.js Interactive Network Animation
-        VANTA.NET({
-            el: "#home",
-            mouseControls: true,
-            touchControls: true,
-            gyroControls: false,
-            minHeight: 200.00,
-            minWidth: 200.00,
-            scale: 1.00,
-            scaleMobile: 1.00,
-            color: 0xfacc15,
-            backgroundColor: 0x121212,
-            points: 15.00,
-            maxDistance: 25.00,
-            spacing: 20.00
-        })
-
-        // Simple script to toggle mobile menu
         document.querySelector('.mobile-menu-btn').addEventListener('click', function () {
             document.querySelector('.nav-links').classList.toggle('active');
         });
-
-        // Close mobile menu when a link is clicked
         document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                document.querySelector('.nav-links').classList.remove('active');
+            link.addEventListener('click', () => document.querySelector('.nav-links').classList.remove('active'));
+        });
+
+        /* ============================================================
+           CINEMATIC EDITS SECTION — INTERACTIONS
+        ============================================================ */
+        gsap.registerPlugin(ScrollTrigger);
+        const isMobile = () => window.innerWidth < 768;
+
+        /* -- Custom Cursor -- */
+        const dot   = document.getElementById('cursor-dot');
+        const ring  = document.getElementById('cursor-ring');
+        const cText = document.getElementById('cursor-text');
+        let mx = 0, my = 0, rx = 0, ry = 0;
+
+        document.addEventListener('mousemove', e => {
+            mx = e.clientX; my = e.clientY;
+            dot.style.transform = `translate(${mx}px,${my}px)`;
+        });
+
+        (function lerpRing() {
+            rx += (mx - rx) * 0.12;
+            ry += (my - ry) * 0.12;
+            ring.style.transform  = `translate(${rx - 18}px,${ry - 18}px)`;
+            cText.style.transform = `translate(${rx - 24}px,${ry - 8}px)`;
+            requestAnimationFrame(lerpRing);
+        })();
+
+        /* Cursor state: play mode on hcard hover */
+        document.querySelectorAll('.hcard, .hero-watch-btn, .btn-cinematic').forEach(el => {
+            el.addEventListener('mouseenter', () => { ring.classList.add('play-mode'); cText.classList.add('visible'); });
+            el.addEventListener('mouseleave', () => { ring.classList.remove('play-mode'); cText.classList.remove('visible'); });
+        });
+
+        /* -- Section intro title reveal -- */
+        gsap.set('.title-inner', { yPercent: 110 });
+        gsap.set('.tagline-inner', { yPercent: 110 });
+        gsap.set('.edits-label', { opacity: 0, y: 20 });
+        gsap.set('.edits-divider', { scaleX: 0, transformOrigin: 'left' });
+
+        ScrollTrigger.create({
+            trigger: '.edits-intro',
+            start: 'top 75%',
+            onEnter: () => {
+                gsap.to('.edits-label',   { opacity: 1, y: 0, duration: 0.6 });
+                gsap.to('.title-inner',   { yPercent: 0, duration: 1, ease: 'power4.out', stagger: 0.12, delay: 0.2 });
+                gsap.to('.tagline-inner', { yPercent: 0, duration: 0.8, ease: 'power3.out', delay: 0.55 });
+                gsap.to('.edits-divider', { scaleX: 1, duration: 1.2, ease: 'expo.out', delay: 0.7 });
+            }
+        });
+
+        /* -- Hero showcase entrance -- */
+        gsap.set('.edits-hero-showcase', { opacity: 0, y: 60 });
+        gsap.set('.hero-number', { opacity: 0, x: 60 });
+        ScrollTrigger.create({
+            trigger: '.edits-hero-showcase',
+            start: 'top 70%',
+            onEnter: () => {
+                gsap.to('.edits-hero-showcase', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' });
+                gsap.to('.hero-number', { opacity: 1, x: 0, duration: 1, ease: 'power3.out', delay: 0.3 });
+                /* Animated progress bar */
+                gsap.to('.hero-progress-fill', { width: '100%', duration: 3, ease: 'power1.inOut', delay: 0.5 });
+            }
+        });
+
+        /* -- Horizontal scroll strip -- */
+        /* -- Horizontal scroll strip FIXED -- */
+        const hscrollWrapper = document.querySelector('.edits-hscroll-wrapper');
+
+        if (hscrollWrapper) {
+
+            hscrollWrapper.addEventListener('wheel', (e) => {
+
+                /* Shift + mouse wheel OR trackpad horizontal swipe */
+                if (e.shiftKey || Math.abs(e.deltaX) > 0) {
+
+                    e.preventDefault();
+
+                    hscrollWrapper.scrollLeft += e.deltaY + e.deltaX;
+                }
+
+            }, { passive: false });
+
+        }
+
+        /* -- hcard stagger on scroll (mobile) -- */
+        if (isMobile()) {
+            gsap.set('.hcard', { opacity: 0, y: 40 });
+            ScrollTrigger.create({
+                trigger: '.edits-hscroll-wrapper',
+                start: 'top 80%',
+                onEnter: () => gsap.to('.hcard', { opacity: 1, y: 0, stagger: 0.12, duration: 0.7, ease: 'power3.out' })
+            });
+        }
+
+        /* -- Bottom CTA reveal -- */
+        gsap.set('.edits-bottom-cta', { opacity: 0, y: 40 });
+        ScrollTrigger.create({
+            trigger: '.edits-bottom-cta',
+            start: 'top 85%',
+            onEnter: () => gsap.to('.edits-bottom-cta', { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' })
+        });
+
+        /* -- hcard mouse-follow spotlight tilt -- */
+        document.querySelectorAll('.hcard').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const r = card.getBoundingClientRect();
+                const x = e.clientX - r.left, y = e.clientY - r.top;
+                const cx = r.width / 2, cy = r.height / 2;
+                const rx2 = (y - cy) / cy * -12;
+                const ry2 = (x - cx) / cx * 12;
+                card.style.transform = `perspective(800px) rotateX(${rx2}deg) rotateY(${ry2}deg) scale(1.04)`;
+                /* spotlight */
+                const glow = card.querySelector('.hcard-glow');
+                if (glow) { glow.style.background = `radial-gradient(250px circle at ${x}px ${y}px, rgba(250,204,21,0.12), transparent 70%)`; }
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = '';
+                const glow = card.querySelector('.hcard-glow');
+                if (glow) glow.style.background = '';
             });
         });
+
+        /* -- Orb parallax on scroll -- */
+        gsap.to('.orb-1', { y: -120, ease: 'none', scrollTrigger: { trigger: '.edits-section', scrub: 2 } });
+        gsap.to('.orb-2', { y:  100, ease: 'none', scrollTrigger: { trigger: '.edits-section', scrub: 3 } });
+        gsap.to('.orb-3', { y:  -80, ease: 'none', scrollTrigger: { trigger: '.edits-section', scrub: 2.5 } });
+
+        /* -- Hero watch button magnetic effect -- */
+        const hwBtn = document.getElementById('hero-watch-btn');
+        if (hwBtn) {
+            hwBtn.addEventListener('mousemove', e => {
+                const r = hwBtn.getBoundingClientRect();
+                const dx = e.clientX - (r.left + r.width / 2);
+                const dy = e.clientY - (r.top + r.height / 2);
+                hwBtn.style.transform = `translate(${dx * 0.35}px, ${dy * 0.35}px)`;
+            });
+            hwBtn.addEventListener('mouseleave', () => { hwBtn.style.transform = ''; });
+        }
     </script>
 </body>
 
