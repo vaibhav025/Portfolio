@@ -3,7 +3,18 @@
 import { useEffect } from "react";
 import { Canvas, useThree } from "@react-three/fiber";
 import { Environment, Lightformer } from "@react-three/drei";
+import { setConsoleFunction } from "three";
 import { Laptop } from "./Laptop";
+
+/*
+ * R3F 9.x still creates a THREE.Clock internally, which three r183+ flags as
+ * deprecated on every load. Drop only that one message; everything else from
+ * three.js is passed through unchanged. Remove once R3F switches to THREE.Timer.
+ */
+setConsoleFunction((type: "log" | "warn" | "error", message: string, ...params: unknown[]) => {
+  if (type === "warn" && message.startsWith("THREE.Clock: This module has been deprecated")) return;
+  console[type](message, ...params);
+});
 
 /** Pause rendering while the tab is hidden (rAF already stops; this also skips the resume burst). */
 function VisibilityGate() {
