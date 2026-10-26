@@ -40,7 +40,7 @@ const vCamUp = new THREE.Vector3();
 const qScreen = new THREE.Quaternion();
 const WORLD_UP = new THREE.Vector3(0, 1, 0);
 
-export function Laptop({ videoSrc }: { videoSrc?: string }) {
+export function Laptop() {
   const group = useRef<THREE.Group>(null);
   const lid = useRef<THREE.Group>(null);
   const screen = useRef<THREE.Mesh>(null);
@@ -52,8 +52,8 @@ export function Laptop({ videoSrc }: { videoSrc?: string }) {
   const pose = useRef({ ...sceneState.target });
   const lidOpen = useRef(0);
 
-  // animated editing UI on the screen (or the showreel video, when one exists)
-  const feed = useMemo(() => (typeof document === "undefined" ? null : new ScreenFeed(videoSrc)), [videoSrc]);
+  // a little animated editor buddy lives on the screen
+  const feed = useMemo(() => (typeof document === "undefined" ? null : new ScreenFeed()), []);
   useLayoutEffect(() => () => feed?.dispose(), [feed]);
 
   const KEY_COLS = 14;
@@ -124,12 +124,8 @@ export function Laptop({ videoSrc }: { videoSrc?: string }) {
     // screen backlight follows the lid, light spills onto the keyboard
     const power = Math.min(1, Math.max(0, (lidP - 0.45) / 0.45));
     if (screenMat.current) screenMat.current.color.setScalar(0.04 + power * 0.96);
-    // the editing UI fades out while the camera is inside the screen (Work section sits on it)
-    if (feed && power > 0.02) {
-      const ui = power * Math.max(0, 1 - diveE * 1.6);
-      feed.draw(t, ui);
-      feed.play(ui > 0.3);
-    }
+    // the buddy fades out while the camera is inside the screen (Work section sits on it)
+    if (feed && power > 0.02) feed.draw(t, power * Math.max(0, 1 - diveE * 1.6), sceneState.mouseX, sceneState.mouseY);
     if (glow.current) glow.current.intensity = power * 5.5;
 
     // camera: resting view, or inside the screen (cover pose) as dive -> 1

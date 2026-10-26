@@ -41,7 +41,6 @@ public/posters/fest-team-reveal.jpg    # or .webp / .png / .avif
 - **Videos:** a short, muted, looping preview works best. Aim for 6–12 seconds, 1280×720 or smaller, H.264 MP4, and keep each file under about 4 MB. They load only on hover, or when the clip is on the program monitor.
 - **Posters:** a 1600×900 still. It shows until the video is ready.
 - **How it's detected:** the site reads `/public/videos` and `/public/posters` at build time. Restart `npm run dev`, or redeploy, after adding files. If an edit has no file, it shows its animated colour-graded placeholder.
-- **Laptop screen:** the 3D laptop plays an editing UI with a program monitor. Drop `public/videos/showreel.mp4` in and that video plays inside the monitor. Without it, the featured edit's video is used, then any edit video, then the animated placeholder.
 - **"Watch Edit":** always opens the original Instagram reel. Reels aren't embedded, because Instagram doesn't allow reliable embedding.
 
 ## Edit content and tune motion
