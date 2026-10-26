@@ -24,13 +24,20 @@ export const about = {
 
 export type Clip = {
   id: string;
-  track: "V1" | "V2" | "A1";
+  track: "V1" | "V2" | "V3" | "A1";
   title: string;
   body: string;
   tags?: string[];
 };
 
 export const experience: Clip[] = [
+  {
+    id: "current-roles",
+    track: "V3",
+    title: "Current Roles",
+    body: "Social Media Lead at ACM, Social Media Lead at the CyberSecurity Club, and Executive at TechSpace.",
+    tags: ["ACM · Social Media Lead", "CyberSecurity Club · Social Media Lead", "TechSpace · Executive"],
+  },
   {
     id: "lead-editor",
     track: "V1",
