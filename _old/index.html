@@ -15,36 +15,21 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="cinematic-body">
+<body>
     <!-- Custom Cinematic Cursor -->
     <div id="cursor-dot"></div>
     <div id="cursor-ring"></div>
     <div id="cursor-text">PLAY</div>
-    <header class="navbar glass-navbar">
-        <div class="logo glow-logo">VAIBHAV</div>
-        <!-- Liquid glass navbar (liquid-navbar.js) -->
-        <nav class="nimbus-nav" data-liquid-nav data-tone="dark" aria-label="Main">
-            <a class="nimbus-item" href="#home" data-fx="glow" aria-label="Home" aria-current="page">
-                <span class="nv-ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 11.2 12 4l8.5 7.2"/><path d="M6 9.6V20h12V9.6"/><path class="nv-door" d="M10 20v-5h4v5Z"/></svg></span>
-                <span class="nimbus-label">Home</span>
-            </a>
-            <a class="nimbus-item" href="#about" data-fx="wave" aria-label="About me">
-                <span class="nv-ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8.5" r="3.8"/><path d="M4.8 20c1.2-3.4 4-5 7.2-5s6 1.6 7.2 5"/></svg></span>
-                <span class="nimbus-label">About</span>
-            </a>
-            <a class="nimbus-item" href="#experience" data-fx="pop" aria-label="Experience">
-                <span class="nv-ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/></svg></span>
-                <span class="nimbus-label">Experience</span>
-            </a>
-            <a class="nimbus-item" href="#portfolio" data-fx="spin" aria-label="Work">
-                <span class="nv-ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 3v18"/><path d="M3 7.5h4"/><path d="M3 12h18"/><path d="M3 16.5h4"/><path d="M17 3v18"/><path d="M17 7.5h4"/><path d="M17 16.5h4"/></svg></span>
-                <span class="nimbus-label">Work</span>
-            </a>
-            <a class="nimbus-item" href="#contact" data-fx="plane" aria-label="Contact">
-                <span class="nv-ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.2 3.6 5.4l2.7 6.8-2.7 6.4L21 12.2Zm-14.7 0H13"/></svg></span>
-                <span class="nimbus-label">Contact</span>
-            </a>
+    <header class="navbar">
+        <div class="logo">VAIBHAV</div>
+        <nav class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#about">About me</a>
+            <a href="#experience">Experience</a>
+            <a href="#portfolio">Work</a>
+            <a href="#contact">Contact</a>
         </nav>
+        <div class="mobile-menu-btn">☰</div>
     </header>
 
     <main>
@@ -57,9 +42,9 @@
                     <p class="subtitle">MY PORTFOLIO</p>
                     <h1 class="title">VAIBHAV<br>SINGLA</h1>
                     <p class="tagline">Video Editor & Technologist</p>
-                    <div class="cta-group cinematic-buttons">
-                        <a href="#portfolio" class="btn btn-primary glow-btn">View My Work</a>
-                        <a href="#contact" class="btn btn-secondary outline-glow-btn">Get in Touch</a>
+                    <div class="cta-group">
+                        <a href="#portfolio" class="btn btn-primary">View My Work</a>
+                        <a href="#contact" class="btn btn-secondary">Get in Touch</a>
                     </div>
                 </div>
                 <!-- Empty column to maintain grid structure on desktop -->
@@ -72,7 +57,7 @@
             <div class="overlay heavy-overlay"></div>
             <div class="container section-content" style="position: relative; z-index: 2;">
                 <div class="grid-2-col">
-                    <div class="text-content cinematic-card" data-aos="fade-right" data-aos-duration="1000">
+                    <div class="text-content" data-aos="fade-right" data-aos-duration="1000">
                         <h2>Hi, I'm Vaibhav.</h2>
                         <h3 class="highlight">Video Editor & Technologist</h3>
                         <p>I am a B.Tech IT undergraduate at USICT, GGSIPU, and a passionate video editor committed to
@@ -93,7 +78,7 @@
             <div class="container section-content" style="position: relative; z-index: 2;">
                 <div class="grid-2-col align-right text-right desc-reverse-mobile">
                     <div class="empty-col"></div>
-                    <div class="text-content cinematic-card" data-aos="fade-left" data-aos-duration="1000">
+                    <div class="text-content" data-aos="fade-left" data-aos-duration="1000">
                         <h2>The Origin</h2>
                         <h3 class="highlight">BBPS, Pitampura (2011–25)</h3>
                         <p>From the basketball court to the center stage, my decade at Bal Bharati was defined by
@@ -117,7 +102,7 @@
             <div class="overlay heavy-overlay"></div>
             <div class="container section-content" style="position: relative; z-index: 2;">
                 <div class="grid-2-col">
-                    <div class="text-content cinematic-card" data-aos="fade-up" data-aos-duration="1000">
+                    <div class="text-content" data-aos="fade-up" data-aos-duration="1000">
                         <h2>Experience</h2>
 
                         <div class="timeline-item" data-aos="fade-up" data-aos-delay="100">
@@ -294,7 +279,7 @@
             <div class="container section-content" style="position: relative; z-index: 2;">
                 <div class="grid-2-col text-right align-right desc-reverse-mobile">
                     <div class="empty-col"></div>
-                    <div class="text-content cinematic-card" data-aos="fade-left" data-aos-duration="1000">
+                    <div class="text-content" data-aos="fade-left" data-aos-duration="1000">
                         <h2>CONTACT ME</h2>
                         <div class="contact-links">
                             <div class="contact-item">
@@ -342,7 +327,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <script src="liquid-navbar.js"></script>
     <script>
         AOS.init({ once: true, offset: 100, duration: 800 });
 
@@ -352,21 +336,12 @@
             color: 0xfacc15, backgroundColor: 0x121212, points: 15, maxDistance: 25, spacing: 20
         });
 
-        /* -- Liquid navbar + scroll-spy -- */
-        const liquidNav = LiquidNavbar(document.querySelector('[data-liquid-nav]'));
-        const navSections = liquidNav.items.map(a => document.querySelector(a.getAttribute('href')));
-        let spyLockUntil = 0, spyTicking = false;
-        liquidNav.items.forEach(a => a.addEventListener('click', () => { spyLockUntil = performance.now() + 1200; }));
-        const spy = () => {
-            spyTicking = false;
-            if (performance.now() < spyLockUntil) return;
-            const line = window.innerHeight * 0.35;
-            let idx = 0;
-            navSections.forEach((sec, i) => { if (sec && sec.getBoundingClientRect().top <= line) idx = i; });
-            if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) idx = navSections.length - 1;
-            liquidNav.setActive(idx);
-        };
-        window.addEventListener('scroll', () => { if (!spyTicking) { spyTicking = true; requestAnimationFrame(spy); } }, { passive: true });
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function () {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => document.querySelector('.nav-links').classList.remove('active'));
+        });
 
         /* ============================================================
            CINEMATIC EDITS SECTION — INTERACTIONS
