@@ -15,7 +15,7 @@ type Props = {
 /** Window chrome shared by the desktop suite and the linear (mobile) layout. */
 export function WindowFrame({ id, title, meta, toolbar, className = "", bodyClassName = "", children }: Props) {
   return (
-    <section id={id} data-window={id} aria-labelledby={`${id}-heading`} className={`win ${className}`}>
+    <section id={id} data-window={id} aria-labelledby={`${id}-heading`} tabIndex={-1} className={`win ${className}`}>
       <header className="win-bar">
         <span className="win-lights" aria-hidden="true">
           <i />

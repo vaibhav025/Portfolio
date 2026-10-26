@@ -2322,3 +2322,12 @@
 .linear .hud-bg {
   background: rgb(14 14 17 / 0.9);
 }
+
+/* windows receive focus after a nav jump; keep the ring inside the frame */
+.win:focus-visible {
+  outline-offset: -2px;
+  border-radius: 14px;
+}
+.win:focus:not(:focus-visible) {
+  outline: none;
+}
