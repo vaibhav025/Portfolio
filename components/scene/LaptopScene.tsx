@@ -38,7 +38,7 @@ function ReadySignal({ onReady }: { onReady: () => void }) {
   return null;
 }
 
-export default function LaptopScene({ onReady }: { onReady: () => void }) {
+export default function LaptopScene({ onReady, videoSrc }: { onReady: () => void; videoSrc?: string }) {
   return (
     <Canvas
       className="scene-canvas"
@@ -61,7 +61,7 @@ export default function LaptopScene({ onReady }: { onReady: () => void }) {
         <Lightformer form="ring" intensity={0.8} position={[0, 2, 6]} scale={3} />
       </Environment>
 
-      <Laptop />
+      <Laptop videoSrc={videoSrc} />
       <VisibilityGate />
       <ReadySignal onReady={onReady} />
     </Canvas>

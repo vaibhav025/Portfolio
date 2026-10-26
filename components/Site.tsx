@@ -16,6 +16,7 @@ import { Outro } from "@/components/ui/Outro";
 import { Overlays } from "@/components/ui/Overlays";
 import { MediaProvider, type MediaManifest } from "@/lib/mediaContext";
 import { store } from "@/lib/store";
+import { edits } from "@/lib/content";
 
 /** three.js lives in its own chunk; phones and reduced-motion visitors never download it */
 const LaptopScene = dynamic(() => import("@/components/scene/LaptopScene"), { ssr: false });
@@ -155,13 +156,16 @@ export default function Site({ media }: { media: MediaManifest }) {
   }, []);
 
   const onSceneReady = useCallback(() => setSceneReady(true), []);
+  // laptop screen: a dedicated showreel if present, else the featured edit's video, else any edit video
+  const screenVideo =
+    media.videos.showreel ?? media.videos[edits.find((e) => e.featured)?.slug ?? ""] ?? Object.values(media.videos)[0];
 
   return (
     <MediaProvider value={media}>
       <div className={`site is-${mode}`} ref={root} id="top">
         {mode === "3d" ? (
           <div className={`scene ${sceneReady ? "is-ready" : ""}`}>
-            <LaptopScene onReady={onSceneReady} />
+            <LaptopScene onReady={onSceneReady} videoSrc={screenVideo} />
           </div>
         ) : null}
 

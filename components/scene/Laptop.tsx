@@ -5,6 +5,7 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { RoundedBox } from "@react-three/drei";
 import * as THREE from "three";
 import { sceneState } from "./sceneState";
+import { ScreenFeed } from "./screenFeed";
 
 /* ---------- tweakables ---------- */
 export const LAPTOP = {
@@ -39,34 +40,7 @@ const vCamUp = new THREE.Vector3();
 const qScreen = new THREE.Quaternion();
 const WORLD_UP = new THREE.Vector3(0, 1, 0);
 
-/** Wallpaper painted to a canvas: dark grade with an ember light leak. Kept plain: the Work section sits on it. */
-function makeWallpaper() {
-  const c = document.createElement("canvas");
-  c.width = 1280;
-  c.height = 800;
-  const g = c.getContext("2d")!;
-  const lin = g.createLinearGradient(0, 0, c.width * 0.55, c.height);
-  lin.addColorStop(0, "#17161a");
-  lin.addColorStop(0.55, "#0c0c0f");
-  lin.addColorStop(1, "#09090b");
-  g.fillStyle = lin;
-  g.fillRect(0, 0, c.width, c.height);
-  const blob = (x: number, y: number, r: number, color: string) => {
-    const rg = g.createRadialGradient(x, y, 0, x, y, r);
-    rg.addColorStop(0, color);
-    rg.addColorStop(1, "rgba(0,0,0,0)");
-    g.fillStyle = rg;
-    g.fillRect(0, 0, c.width, c.height);
-  };
-  blob(c.width * 0.78, c.height * 0.08, c.width * 0.62, "rgba(255,77,31,0.30)");
-  blob(c.width * 0.08, c.height * 1.0, c.width * 0.55, "rgba(40,90,110,0.34)");
-  const tex = new THREE.CanvasTexture(c);
-  tex.colorSpace = THREE.SRGBColorSpace;
-  tex.anisotropy = 4;
-  return tex;
-}
-
-export function Laptop() {
+export function Laptop({ videoSrc }: { videoSrc?: string }) {
   const group = useRef<THREE.Group>(null);
   const lid = useRef<THREE.Group>(null);
   const screen = useRef<THREE.Mesh>(null);
@@ -78,8 +52,9 @@ export function Laptop() {
   const pose = useRef({ ...sceneState.target });
   const lidOpen = useRef(0);
 
-  const wallpaper = useMemo(() => (typeof document === "undefined" ? null : makeWallpaper()), []);
-  useLayoutEffect(() => () => wallpaper?.dispose(), [wallpaper]);
+  // animated editing UI on the screen (or the showreel video, when one exists)
+  const feed = useMemo(() => (typeof document === "undefined" ? null : new ScreenFeed(videoSrc)), [videoSrc]);
+  useLayoutEffect(() => () => feed?.dispose(), [feed]);
 
   const KEY_COLS = 14;
   const KEY_ROWS = 6;
@@ -149,6 +124,12 @@ export function Laptop() {
     // screen backlight follows the lid, light spills onto the keyboard
     const power = Math.min(1, Math.max(0, (lidP - 0.45) / 0.45));
     if (screenMat.current) screenMat.current.color.setScalar(0.04 + power * 0.96);
+    // the editing UI fades out while the camera is inside the screen (Work section sits on it)
+    if (feed && power > 0.02) {
+      const ui = power * Math.max(0, 1 - diveE * 1.6);
+      feed.draw(t, ui);
+      feed.play(ui > 0.3);
+    }
     if (glow.current) glow.current.intensity = power * 5.5;
 
     // camera: resting view, or inside the screen (cover pose) as dive -> 1
@@ -224,7 +205,7 @@ export function Laptop() {
         {/* display: faces the keyboard when closed, the viewer when open */}
         <mesh ref={screen} position={[0, 0.001, LAPTOP.lidD / 2 + 0.03]} rotation={[Math.PI / 2, 0, 0]}>
           <planeGeometry args={[LAPTOP.screenW, LAPTOP.screenH]} />
-          <meshBasicMaterial ref={screenMat} map={wallpaper} toneMapped={false} polygonOffset polygonOffsetFactor={-2} />
+          <meshBasicMaterial ref={screenMat} map={feed?.texture ?? null} toneMapped={false} polygonOffset polygonOffsetFactor={-2} />
         </mesh>
         <pointLight ref={glow} position={[0, -0.6, LAPTOP.lidD / 2]} color="#ffd9c7" distance={4.5} decay={1.6} intensity={0} />
       </group>
