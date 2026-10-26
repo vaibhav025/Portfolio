@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+/* ============================================================
+   Design tokens
+   ============================================================ */
+@theme inline {
+  --color-void: #0b0b0d;
+  --color-graphite: #141417;
+  --color-panel: #1a1a1e;
+  --color-line: rgb(236 230 218 / 0.1);
+  --color-bone: #ece6da;
+  --color-mute: rgb(236 230 218 / 0.62);
+  --color-dim: rgb(236 230 218 / 0.4);
+  --color-accent: #ff4d1f;
+  --color-accent-soft: rgb(255 77 31 / 0.16);
+
+  --font-display: var(--font-shoulders), "Arial Narrow", sans-serif;
+  --font-sans: var(--font-archivo), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+  --font-serif: var(--font-instrument), Georgia, serif;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out-strong: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+:root {
+  color-scheme: dark;
+  --wallpaper:
+    radial-gradient(120% 90% at 78% 8%, rgb(255 77 31 / 0.28), transparent 52%),
+    radial-gradient(90% 80% at 8% 100%, rgb(40 90 110 / 0.32), transparent 60%),
+    linear-gradient(160deg, #17161a 0%, #0c0c0f 55%, #09090b 100%);
+}
+
+html {
+  background: var(--color-void);
+  color: var(--color-bone);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background: var(--color-void);
+  font-family: var(--font-sans);
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-void);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.sr-only-focusable:not(:focus) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Hide the native cursor only while the custom one is mounted */
+html.has-cursor,
+html.has-cursor * {
+  cursor: none !important;
+}
