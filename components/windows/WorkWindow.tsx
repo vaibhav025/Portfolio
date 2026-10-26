@@ -21,8 +21,13 @@ type Props = {
 
 export function WorkWindow({ className = "", mode, onSeek }: Props) {
   const index = useStore((s) => s.workIndex);
+  const scene = useStore((s) => s.scene);
   const [hover, setHover] = useState<number | null>(null);
   const [playing, setPlaying] = useState(true);
+  const [inView, setInView] = useState(false);
+  const monitorRef = useRef<HTMLDivElement>(null);
+  // nothing plays (no rAF, no video decode) unless the monitor is actually visible
+  const live = playing && (mode === "suite" ? scene === "work" : inView);
   const stripRef = useRef<HTMLOListElement>(null);
   const tcRef = useRef<HTMLSpanElement>(null);
   const active = Math.min(index, edits.length - 1);
@@ -40,7 +45,14 @@ export function WorkWindow({ className = "", mode, onSeek }: Props) {
 
   // Program-monitor timecode runs while "playing"; written straight to the DOM.
   useEffect(() => {
-    if (!playing) return;
+    if (mode !== "linear" || !monitorRef.current) return;
+    const io = new IntersectionObserver(([e]) => setInView(e.isIntersecting));
+    io.observe(monitorRef.current);
+    return () => io.disconnect();
+  }, [mode]);
+
+  useEffect(() => {
+    if (!live) return;
     let raf = 0;
     const t0 = performance.now();
     const tick = (now: number) => {
@@ -49,22 +61,36 @@ export function WorkWindow({ className = "", mode, onSeek }: Props) {
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [playing, active]);
+  }, [live, active]);
 
-  // Linear mode: the card nearest the strip centre becomes active
+  // Linear mode: when the user swipes the strip, the card nearest its centre becomes active
   useEffect(() => {
     if (mode !== "linear" || !stripRef.current) return;
     const strip = stripRef.current;
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) {
-          if (e.isIntersecting) store.set({ workIndex: Number((e.target as HTMLElement).dataset.card) });
+    let raf = 0;
+    const pick = () => {
+      raf = 0;
+      const mid = strip.scrollLeft + strip.clientWidth / 2;
+      let best = 0;
+      let dist = Infinity;
+      Array.from(strip.children).forEach((c, i) => {
+        const el = c as HTMLElement;
+        const d = Math.abs(el.offsetLeft + el.offsetWidth / 2 - mid);
+        if (d < dist) {
+          dist = d;
+          best = i;
         }
-      },
-      { root: strip, threshold: 0.6 },
-    );
-    Array.from(strip.children).forEach((c) => io.observe(c));
-    return () => io.disconnect();
+      });
+      store.set({ workIndex: best });
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(pick);
+    };
+    strip.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      strip.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(raf);
+    };
   }, [mode]);
 
   return (
@@ -84,11 +110,11 @@ export function WorkWindow({ className = "", mode, onSeek }: Props) {
         </div>
 
         {/* ---------- Program monitor ---------- */}
-        <div className="monitor" data-monitor>
+        <div className="monitor" data-monitor ref={monitorRef}>
           <div className="monitor-screen" data-cursor="play">
             {edits.map((e, i) => (
               <div key={e.slug} className="monitor-layer" data-on={i === active ? "" : undefined} aria-hidden={i !== active}>
-                <EditMedia edit={e} playing={playing && i === active} large />
+                <EditMedia edit={e} playing={live && i === active} large />
               </div>
             ))}
             <div className="monitor-hud" aria-hidden="true">

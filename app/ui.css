@@ -1099,7 +1099,8 @@
 .suite .exp-card {
   display: grid;
   grid-template-columns: 1fr 360px;
-  grid-template-rows: auto auto 1fr auto;
+  grid-template-rows: repeat(4, auto) 1fr;
+  align-content: start;
   column-gap: 40px;
   inset: 28px 34px 18px;
   max-width: none;
@@ -1268,6 +1269,10 @@
   height: 12px;
   background: var(--color-accent);
   clip-path: polygon(0 0, 100% 0, 100% 60%, 50% 100%, 0 60%);
+}
+.exp-playhead[data-end] .exp-playhead-tc {
+  left: auto;
+  right: 12px;
 }
 .exp-playhead-tc {
   position: absolute;
@@ -2278,4 +2283,42 @@
   .monitor-title {
     animation: none;
   }
+}
+
+/* ---------- linear: never let a window widen the page ---------- */
+.lin-stack > *,
+.linear .win,
+.linear .win-body,
+.linear .work-layout > *,
+.linear .monitor > * {
+  min-width: 0;
+}
+.linear .term {
+  overflow-x: auto;
+  font-size: 12.5px;
+}
+.linear .term-list .term-line {
+  grid-template-columns: 22px 70px 1fr auto;
+}
+@media (max-width: 480px) {
+  .linear .hud-nav a {
+    padding: 8px 7px;
+    font-size: 12px;
+  }
+  .mail-row {
+    grid-template-columns: 76px 1fr;
+    padding: 0 14px;
+  }
+  .mail-actions {
+    flex-wrap: wrap;
+  }
+}
+.linear .term-line {
+  white-space: normal;
+}
+.linear .hud-tc {
+  display: none;
+}
+.linear .hud-bg {
+  background: rgb(14 14 17 / 0.9);
 }

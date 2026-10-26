@@ -237,6 +237,7 @@ export default function Suite({ onMounted, onSceneReady, started }: Props) {
           onUpdate: () => {
             playhead.style.transform = `translateX(${(lane.offsetLeft + ph.p * lane.offsetWidth).toFixed(1)}px)`;
             phTc.textContent = toTimecode(ph.p * 60);
+            playhead.toggleAttribute("data-end", ph.p > 0.82); // keep the label inside the window
             let idx = 0;
             CLIP_SPANS.forEach(([a], i) => {
               if (ph.p >= a + 0.02) idx = i;

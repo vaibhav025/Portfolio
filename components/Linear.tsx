@@ -62,7 +62,7 @@ export default function Linear() {
       const vh = innerHeight;
       if (lid && hero) {
         const p = Math.min(1, Math.max(0, -hero.getBoundingClientRect().top / (vh * 0.6)));
-        lid.style.transform = `rotateX(${(-88 + p * 88 * 0.92).toFixed(2)}deg)`;
+        lid.style.transform = `rotateX(${(-64 + p * 58).toFixed(2)}deg)`;
       }
       if (exp && rail) {
         const r = exp.getBoundingClientRect();
