@@ -1,32 +1,18 @@
-"use client";
-
 import { contact } from "@/lib/content";
 import { IconRewind } from "./icons";
 
-/** Closing card: "Thank You", rewind-to-top and a tiny socials footer. */
-export function Outro({ onRewind, className = "" }: { onRewind?: () => void; className?: string }) {
+/** Closing card: "Thank you", back-to-top and a tiny socials footer. The laptop closes here. */
+export function Outro() {
   return (
-    <div className={`outro ${className}`} data-outro>
-      <p className="outro-k" data-outro-item>
-        End of sequence
-      </p>
-      <h2 className="outro-h" data-outro-item>
-        Thank <em>you</em>
+    <section className="outro" data-pose="outro" aria-labelledby="outro-heading">
+      <p className="eyebrow">End of sequence</p>
+      <h2 id="outro-heading" className="outro-h">
+        Thank <span>you.</span>
       </h2>
-      <a
-        className="outro-rewind"
-        href="#top"
-        data-outro-item
-        data-magnetic
-        onClick={(e) => {
-          if (!onRewind) return;
-          e.preventDefault();
-          onRewind();
-        }}
-      >
-        <IconRewind /> Back to top
+      <a className="btn btn-ghost" href="#top">
+        <IconRewind className="btn-ico" /> Back to top
       </a>
-      <footer className="outro-foot" data-outro-item>
+      <footer className="outro-foot">
         <a href={contact.linkedin} target="_blank" rel="noopener noreferrer">
           LinkedIn
         </a>
@@ -38,6 +24,6 @@ export function Outro({ onRewind, className = "" }: { onRewind?: () => void; cla
         <a href={`mailto:${contact.email}`}>{contact.email}</a>
         <span>© {new Date().getFullYear()} Vaibhav Singla</span>
       </footer>
-    </div>
+    </section>
   );
 }

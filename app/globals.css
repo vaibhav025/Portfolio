@@ -14,10 +14,9 @@
   --color-accent: #ff4d1f;
   --color-accent-soft: rgb(255 77 31 / 0.16);
 
-  --font-display: var(--font-shoulders), "Arial Narrow", sans-serif;
-  --font-sans: var(--font-archivo), system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
-  --font-serif: var(--font-instrument), Georgia, serif;
+  --font-display: var(--font-geist), system-ui, sans-serif;
+  --font-sans: var(--font-geist), system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
@@ -65,20 +64,11 @@ body {
   white-space: nowrap;
 }
 
-/* Lenis */
-html.lenis,
-html.lenis body {
-  height: auto;
+html {
+  scroll-behavior: smooth;
 }
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
-}
-.lenis.lenis-stopped {
-  overflow: hidden;
-}
-
-/* Hide the native cursor only while the custom one is mounted */
-html.has-cursor,
-html.has-cursor * {
-  cursor: none !important;
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }

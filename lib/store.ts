@@ -9,10 +9,9 @@ import { useSyncExternalStore } from "react";
 type State = {
   workIndex: number;
   scene: string;
-  sound: boolean;
 };
 
-let state: State = { workIndex: 0, scene: "intro", sound: false };
+let state: State = { workIndex: 0, scene: "intro" };
 const subs = new Set<() => void>();
 
 export const store = {

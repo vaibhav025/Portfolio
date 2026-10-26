@@ -1,10 +1,10 @@
 # Vaibhav Singla — Portfolio ("The Editing Suite")
 
-A scroll-driven portfolio for a video editor. You scroll and a closed laptop opens, the camera dives into the screen, and the page turns into an editing-suite desktop. Each section opens as an app window from the dock.
+A portfolio for a video editor. A 3D laptop floats behind a normal, short page. Press **Play** (or just scroll) and the lid opens. As you scroll, the laptop drifts left and right beside each section, grows, dives into its own screen for the Work section, comes back out, and closes at the end.
 
-- **Stack:** Next.js 16 (App Router), TypeScript, Tailwind CSS v4, GSAP + ScrollTrigger, Lenis, React Three Fiber + drei.
-- **Desktop path ("suite"):** one pinned stage. A master GSAP timeline is scrubbed by scroll and drives the 3D laptop, the 3D-to-DOM handoff, the windows and their contents.
-- **Light path ("linear"):** used for touch devices, small screens, `prefers-reduced-motion` and browsers without WebGL. It has a 2.5D CSS laptop, stacked window cards and native scrolling. It never downloads three.js.
+- **Stack:** Next.js 16 (App Router), TypeScript, Tailwind CSS v4, React Three Fiber + drei. Native scrolling, native cursor.
+- **Desktop:** the laptop is a fixed WebGL canvas behind the content. Each section has a pose (`components/scene/path.ts`); the laptop holds it while the section is on screen and glides to the next pose in between.
+- **Phones, reduced motion, no WebGL:** a lightweight CSS laptop in the hero that opens on Play or scroll. three.js is never downloaded.
 
 ## Run locally
 
@@ -48,24 +48,21 @@ public/posters/fest-team-reveal.jpg    # or .webp / .png / .avif
 | What | Where |
 | --- | --- |
 | All text, links, edits and contact details | `lib/content.ts` |
-| Scene order and length (beats; 1 beat = 100vh of scroll) | `lib/timeline.ts` |
-| Colours, fonts and easing tokens | `app/globals.css` (`@theme`) |
-| Window positions, landing points for nav jumps, scrub smoothing | constants at the top of `components/Suite.tsx` |
-| Laptop size, materials and camera keyframes | constants at the top of `components/scene/Laptop.tsx` |
-| Cursor follow and magnetic strength | constants at the top of `components/ui/Cursor.tsx` |
+| Where the laptop sits per section (left/right, size, rotation, inside the screen) | `POSES` in `components/scene/path.ts` |
+| How long it holds vs travels between sections | `HOLD_IN` / `HOLD_OUT` in `components/scene/path.ts` |
+| Glide speed, lid speed, camera | constants at the top of `components/scene/Laptop.tsx` |
+| Colours, fonts (Geist / Geist Mono) and easing tokens | `app/globals.css` (`@theme`), `app/layout.tsx` |
 
 ## Structure
 
 ```
 app/                 layout (fonts, SEO, OG), page, global + component CSS, favicon
 components/
-  Experience.tsx     picks suite vs linear, shows the export-dialog loader
-  Suite.tsx          Lenis + master ScrollTrigger timeline (desktop)
-  Linear.tsx         lighter mobile / reduced-motion layout
-  scene/             R3F canvas, procedural laptop, scroll-to-3D state bridge
-  windows/           window chrome, desktop + dock, one component per app
-  ui/                HUD/nav, cursor, loader, overlays, hero, outro, icons
-lib/                 content, timeline constants, store, media manifest, sfx
+  Site.tsx           the page: sections, Play/auto-open, scroll -> laptop pose, reveals
+  scene/             R3F canvas, procedural laptop, per-section poses, state bridge
+  windows/           window chrome + one component per section
+  ui/                nav, hero, outro, overlays, icons
+lib/                 content, store, media manifest, timecode helper
 public/
   images/            portrait (WebP) + og.jpg
   videos/ posters/   your media slots (see above)
@@ -83,6 +80,6 @@ _old/                previous static site, kept for reference only (not built)
 
 ## Notes
 
-- Sound is off by default. The speaker button in the top bar turns on soft synthesised cut sounds; there are no audio files.
-- The 3D render loop pauses while the desktop covers the canvas, and when the tab is hidden.
+- Text animates in once and then stays; nothing re-animates when you scroll back.
+- The 3D render loop pauses when the tab is hidden.
 - Laptop model: built from primitives in `components/scene/Laptop.tsx`. No third-party model, so there are no licence or credit requirements.

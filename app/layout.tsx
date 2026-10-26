@@ -1,24 +1,10 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo, Big_Shoulders, Instrument_Serif, JetBrains_Mono } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import "./ui.css";
 
-const shoulders = Big_Shoulders({
-  subsets: ["latin"],
-  variable: "--font-shoulders",
-  axes: ["opsz"],
-  display: "swap",
-  adjustFontFallback: false, // no metric overrides exist for this family
-});
-const archivo = Archivo({ subsets: ["latin"], variable: "--font-archivo", axes: ["wdth"], display: "swap" });
-const jetbrains = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrains", display: "swap" });
-const instrument = Instrument_Serif({
-  subsets: ["latin"],
-  weight: "400",
-  style: ["normal", "italic"],
-  variable: "--font-instrument",
-  display: "swap",
-});
+const geist = Geist({ subsets: ["latin"], variable: "--font-geist", display: "swap" });
+const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono", display: "swap" });
 
 const title = "Vaibhav Singla | Video Editor & Technologist";
 const description =
@@ -46,10 +32,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html
-      lang="en"
-      className={`${shoulders.variable} ${archivo.variable} ${jetbrains.variable} ${instrument.variable}`}
-    >
+    <html lang="en" className={`${geist.variable} ${geistMono.variable}`}>
       <body>{children}</body>
     </html>
   );

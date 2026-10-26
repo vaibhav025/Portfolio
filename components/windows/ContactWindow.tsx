@@ -48,11 +48,11 @@ export function ContactWindow({ className = "" }: { className?: string }) {
           <p className="mail-p">{about.callout}</p>
         </div>
         <div className="mail-actions" data-field>
-          <a className="send-btn" href={`mailto:${contact.email}`} data-magnetic>
+          <a className="send-btn" href={`mailto:${contact.email}`}>
             Send email
             <IconArrowUpRight className="mail-ico" />
           </a>
-          <a className="ghost-btn" href={contact.phoneHref} data-magnetic>
+          <a className="ghost-btn" href={contact.phoneHref}>
             Call
           </a>
         </div>

@@ -19,17 +19,16 @@ export const LAPTOP = {
   aluminium: "#2b2b30",
   accent: "#ff4d1f",
 };
+const FOLLOW = 3.2; // how fast the laptop glides to its scroll pose (higher = snappier)
+const LID_SPEED = 0.62; // lid opening, fraction per second (~1.6 s)
+const CAM = new THREE.Vector3(0, 1.05, 9.2); // resting camera
+const LOOK = new THREE.Vector3(0, 0.35, 0);
 
-/** camera keyframes: hero (closed), lid open, then computed "cover" pose inside the screen */
-const CAM_HERO = new THREE.Vector3(0, 2.35, 7.4);
-const CAM_OPEN = new THREE.Vector3(0, 1.55, 5.5);
-const LOOK_HERO = new THREE.Vector3(0, 0.3, 0);
-
-const ease = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2); // power3.inOut
+const easeInOut = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 const expoInOut = (t: number) =>
   t <= 0 ? 0 : t >= 1 ? 1 : t < 0.5 ? Math.pow(2, 20 * t - 10) / 2 : (2 - Math.pow(2, -20 * t + 10)) / 2;
 
-// scratch objects, reused every frame (no per-frame allocation)
+// scratch objects reused every frame (no per-frame allocation)
 const vScreen = new THREE.Vector3();
 const vNormal = new THREE.Vector3();
 const vUp = new THREE.Vector3();
@@ -40,7 +39,7 @@ const vCamUp = new THREE.Vector3();
 const qScreen = new THREE.Quaternion();
 const WORLD_UP = new THREE.Vector3(0, 1, 0);
 
-/** Wallpaper painted to a canvas so the 3D screen matches the DOM desktop pixel-for-pixel in tone. */
+/** Wallpaper painted to a canvas: dark grade with an ember light leak. Kept plain: the Work section sits on it. */
 function makeWallpaper() {
   const c = document.createElement("canvas");
   c.width = 1280;
@@ -75,8 +74,12 @@ export function Laptop() {
   const glow = useRef<THREE.PointLight>(null);
   const screenMat = useRef<THREE.MeshBasicMaterial>(null);
   const { camera, size } = useThree();
+  // current (eased) pose; starts at the hero pose
+  const pose = useRef({ ...sceneState.target });
+  const lidOpen = useRef(0);
 
   const wallpaper = useMemo(() => (typeof document === "undefined" ? null : makeWallpaper()), []);
+  useLayoutEffect(() => () => wallpaper?.dispose(), [wallpaper]);
 
   const KEY_COLS = 14;
   const KEY_ROWS = 6;
@@ -91,11 +94,10 @@ export function Laptop() {
     for (let r = 0; r < KEY_ROWS; r++) {
       for (let c = 0; c < KEY_COLS; c++) {
         o.position.set((c - (KEY_COLS - 1) / 2) * pitch, LAPTOP.baseH + 0.004, -0.98 + r * pitch);
-        // the space bar: stretch the middle of the last row
+        // the space bar: stretch one key across the middle of the last row
         if (r === KEY_ROWS - 1 && c >= 4 && c <= 9) {
-          if (c !== 4) {
-            o.scale.set(0.0001, 0.0001, 0.0001);
-          } else {
+          if (c !== 4) o.scale.set(0.0001, 0.0001, 0.0001);
+          else {
             o.position.x = 0;
             o.scale.set(6.0, 1, 1);
           }
@@ -107,49 +109,68 @@ export function Laptop() {
     m.instanceMatrix.needsUpdate = true;
   }, []);
 
-  useLayoutEffect(() => () => wallpaper?.dispose(), [wallpaper]);
-
-  useFrame((state) => {
+  useFrame((state, delta) => {
     const g = group.current;
     const l = lid.current;
     const s = screen.current;
     if (!g || !l || !s) return;
+    const dt = Math.min(delta, 1 / 20);
     const t = state.clock.elapsedTime;
-    const { lid: lidP, dive, power, mouseX, mouseY } = sceneState;
-    const calm = 1 - expoInOut(Math.min(1, dive * 1.2)); // idle motion fades out during the dive
+    const P = pose.current;
+    const T = sceneState.target;
 
-    // idle float + mouse parallax
-    g.position.y = Math.sin(t * 0.9) * 0.05 * calm;
-    g.rotation.y = THREE.MathUtils.lerp(g.rotation.y, (mouseX * 0.22 - 0.05) * calm, 0.06);
-    g.rotation.x = THREE.MathUtils.lerp(g.rotation.x, mouseY * 0.06 * calm, 0.06);
+    // glide toward the scroll pose (frame-rate independent exponential ease)
+    const k = 1 - Math.exp(-FOLLOW * dt);
+    P.x += (T.x - P.x) * k;
+    P.y += (T.y - P.y) * k;
+    P.s += (T.s - P.s) * k;
+    P.ry += (T.ry - P.ry) * k;
+    P.rx += (T.rx - P.rx) * k;
+    P.dive += (T.dive - P.dive) * k;
+    P.lid += (T.lid - P.lid) * k;
+    sceneState.diveNow = P.dive;
 
-    // lid hinge (scrubbed)
-    l.rotation.x = -LAPTOP.openAngle * ease(lidP);
+    // lid: opens once (Play / first scroll), on its own clock
+    if (sceneState.opened) lidOpen.current = Math.min(1, lidOpen.current + dt * LID_SPEED);
+    const lidP = easeInOut(lidOpen.current) * P.lid;
+    l.rotation.x = -LAPTOP.openAngle * lidP;
 
-    // screen backlight + light spill onto the keyboard
+    const diveE = expoInOut(Math.min(1, Math.max(0, P.dive)));
+    const calm = 1 - diveE; // idle float + parallax fade out while inside the screen
+
+    g.position.set(P.x * calm, P.y * calm + Math.sin(t * 0.9) * 0.06 * calm, 0);
+    g.scale.setScalar(P.s);
+    g.rotation.set(
+      P.rx * calm + sceneState.mouseY * 0.08 * calm,
+      P.ry * calm + sceneState.mouseX * 0.25 * calm,
+      0,
+    );
+
+    // screen backlight follows the lid, light spills onto the keyboard
+    const power = Math.min(1, Math.max(0, (lidP - 0.45) / 0.45));
     if (screenMat.current) screenMat.current.color.setScalar(0.04 + power * 0.96);
     if (glow.current) glow.current.intensity = power * 5.5;
 
-    // ---- camera: hero -> open -> inside the screen ----
-    g.updateMatrixWorld(true);
-    s.getWorldPosition(vScreen);
-    s.getWorldQuaternion(qScreen);
-    vNormal.set(0, 0, 1).applyQuaternion(qScreen); // plane faces +z locally
-    vUp.set(0, 1, 0).applyQuaternion(qScreen);
-
+    // camera: resting view, or inside the screen (cover pose) as dive -> 1
     const cam = camera as THREE.PerspectiveCamera;
-    const aspect = size.width / Math.max(1, size.height);
-    const tanH = Math.tan(THREE.MathUtils.degToRad(cam.fov) / 2);
-    // distance at which the screen just covers the viewport in both axes
-    const d = Math.min(LAPTOP.screenH / (2 * tanH), LAPTOP.screenW / (2 * tanH * aspect)) * 0.965;
-    vCover.copy(vScreen).addScaledVector(vNormal, d);
-
-    const lidE = ease(lidP);
-    const diveE = expoInOut(dive);
-    vPos.lerpVectors(CAM_HERO, CAM_OPEN, lidE).lerp(vCover, diveE);
-    vLook.lerpVectors(LOOK_HERO, vScreen, Math.min(1, lidE * 0.8 + diveE));
-    vCamUp.copy(WORLD_UP).lerp(vUp, diveE).normalize();
-
+    vPos.copy(CAM);
+    vLook.copy(LOOK);
+    vCamUp.copy(WORLD_UP);
+    if (diveE > 0.0001) {
+      g.updateMatrixWorld(true);
+      s.getWorldPosition(vScreen);
+      s.getWorldQuaternion(qScreen);
+      vNormal.set(0, 0, 1).applyQuaternion(qScreen);
+      vUp.set(0, 1, 0).applyQuaternion(qScreen);
+      const aspect = size.width / Math.max(1, size.height);
+      const tanH = Math.tan(THREE.MathUtils.degToRad(cam.fov) / 2);
+      // distance at which the screen just covers the viewport in both axes
+      const d = Math.min((LAPTOP.screenH * P.s) / (2 * tanH), (LAPTOP.screenW * P.s) / (2 * tanH * aspect)) * 0.96;
+      vCover.copy(vScreen).addScaledVector(vNormal, d);
+      vPos.lerp(vCover, diveE);
+      vLook.lerp(vScreen, diveE);
+      vCamUp.lerp(vUp, diveE).normalize();
+    }
     cam.position.copy(vPos);
     cam.up.copy(vCamUp);
     cam.lookAt(vLook);
@@ -179,11 +200,6 @@ export function Laptop() {
         <planeGeometry args={[1.3, 0.72]} />
         <meshPhysicalMaterial color="#323238" metalness={0.7} roughness={0.22} clearcoat={0.6} />
       </mesh>
-      {/* front notch */}
-      <mesh position={[0, LAPTOP.baseH - 0.02, LAPTOP.baseD / 2 + 0.001]}>
-        <planeGeometry args={[0.5, 0.03]} />
-        <meshBasicMaterial color="#101012" />
-      </mesh>
 
       {/* lid, pivoting on the hinge at the back edge */}
       <group ref={lid} position={[0, LAPTOP.baseH + 0.012, -LAPTOP.baseD / 2 + 0.06]}>
@@ -201,14 +217,14 @@ export function Laptop() {
           <meshStandardMaterial color={LAPTOP.accent} emissive={LAPTOP.accent} emissiveIntensity={0.6} roughness={0.3} />
         </mesh>
         {/* glossy bezel */}
-        <mesh position={[0, 0.004, LAPTOP.lidD / 2]} rotation={[Math.PI / 2, 0, 0]}>
+        <mesh position={[0, 0.005, LAPTOP.lidD / 2]} rotation={[Math.PI / 2, 0, 0]}>
           <planeGeometry args={[LAPTOP.baseW - 0.08, LAPTOP.lidD - 0.08]} />
           <meshPhysicalMaterial color="#040405" roughness={0.12} metalness={0.2} clearcoat={1} />
         </mesh>
-        {/* display: faces +z after the x-rotation, i.e. towards the keyboard / viewer */}
-        <mesh ref={screen} position={[0, 0.0032, LAPTOP.lidD / 2 + 0.03]} rotation={[Math.PI / 2, 0, 0]}>
+        {/* display: faces the keyboard when closed, the viewer when open */}
+        <mesh ref={screen} position={[0, 0.001, LAPTOP.lidD / 2 + 0.03]} rotation={[Math.PI / 2, 0, 0]}>
           <planeGeometry args={[LAPTOP.screenW, LAPTOP.screenH]} />
-          <meshBasicMaterial ref={screenMat} map={wallpaper} toneMapped={false} side={THREE.FrontSide} />
+          <meshBasicMaterial ref={screenMat} map={wallpaper} toneMapped={false} polygonOffset polygonOffsetFactor={-2} />
         </mesh>
         <pointLight ref={glow} position={[0, -0.6, LAPTOP.lidD / 2]} color="#ffd9c7" distance={4.5} decay={1.6} intensity={0} />
       </group>

@@ -11,23 +11,14 @@ import { WindowFrame } from "./WindowFrame";
 /** number of items in the strip: every edit + the "View all" card */
 export const WORK_ITEMS = edits.length + 1;
 
-type Props = {
-  className?: string;
-  /** "suite": strip positions are driven by the scroll timeline. "linear": native swipe strip. */
-  mode: "suite" | "linear";
-  /** suite only: ask the timeline to move the playhead to another item */
-  onSeek?: (index: number) => void;
-};
-
-export function WorkWindow({ className = "", mode, onSeek }: Props) {
+export function WorkWindow({ className = "" }: { className?: string }) {
   const index = useStore((s) => s.workIndex);
-  const scene = useStore((s) => s.scene);
   const [hover, setHover] = useState<number | null>(null);
   const [playing, setPlaying] = useState(true);
   const [inView, setInView] = useState(false);
   const monitorRef = useRef<HTMLDivElement>(null);
   // nothing plays (no rAF, no video decode) unless the monitor is actually visible
-  const live = playing && (mode === "suite" ? scene === "work" : inView);
+  const live = playing && inView;
   const stripRef = useRef<HTMLOListElement>(null);
   const tcRef = useRef<HTMLSpanElement>(null);
   const active = Math.min(index, edits.length - 1);
@@ -36,20 +27,20 @@ export function WorkWindow({ className = "", mode, onSeek }: Props) {
 
   const go = (i: number) => {
     const n = Math.max(0, Math.min(WORK_ITEMS - 1, i));
-    if (mode === "suite" && onSeek) onSeek(n);
-    else {
-      store.set({ workIndex: n });
-      stripRef.current?.children[n]?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
-    }
+    store.set({ workIndex: n });
+    const strip = stripRef.current;
+    const card = strip?.children[n] as HTMLElement | undefined;
+    // scroll the strip only (scrollIntoView would also move the page)
+    if (strip && card) strip.scrollTo({ left: card.offsetLeft - (strip.clientWidth - card.offsetWidth) / 2, behavior: "smooth" });
   };
 
   // Program-monitor timecode runs while "playing"; written straight to the DOM.
   useEffect(() => {
-    if (mode !== "linear" || !monitorRef.current) return;
+    if (!monitorRef.current) return;
     const io = new IntersectionObserver(([e]) => setInView(e.isIntersecting));
     io.observe(monitorRef.current);
     return () => io.disconnect();
-  }, [mode]);
+  }, []);
 
   useEffect(() => {
     if (!live) return;
@@ -65,7 +56,7 @@ export function WorkWindow({ className = "", mode, onSeek }: Props) {
 
   // Linear mode: when the user swipes the strip, the card nearest its centre becomes active
   useEffect(() => {
-    if (mode !== "linear" || !stripRef.current) return;
+    if (!stripRef.current) return;
     const strip = stripRef.current;
     let raf = 0;
     const pick = () => {
@@ -91,14 +82,14 @@ export function WorkWindow({ className = "", mode, onSeek }: Props) {
       strip.removeEventListener("scroll", onScroll);
       cancelAnimationFrame(raf);
     };
-  }, [mode]);
+  }, []);
 
   return (
     <WindowFrame
       id="work"
       title="Media Browser — Edits"
       meta={`${edits.length} clips`}
-      className={`win-work is-${mode} ${className}`}
+      className={`win-work ${className}`}
     >
       <div className="work-layout">
         <div className="work-head">
@@ -111,7 +102,7 @@ export function WorkWindow({ className = "", mode, onSeek }: Props) {
 
         {/* ---------- Program monitor ---------- */}
         <div className="monitor" data-monitor ref={monitorRef}>
-          <div className="monitor-screen" data-cursor="play">
+          <div className="monitor-screen">
             {edits.map((e, i) => (
               <div key={e.slug} className="monitor-layer" data-on={i === active ? "" : undefined} aria-hidden={i !== active}>
                 <EditMedia edit={e} playing={live && i === active} large />
@@ -146,7 +137,7 @@ export function WorkWindow({ className = "", mode, onSeek }: Props) {
               ))}
             </ul>
             <div className="transport">
-              <button type="button" className="t-btn" onClick={() => go(index - 1)} aria-label="Previous edit" data-magnetic>
+              <button type="button" className="t-btn" onClick={() => go(index - 1)} aria-label="Previous edit">
                 <IconStepBack />
               </button>
               <button
@@ -154,11 +145,11 @@ export function WorkWindow({ className = "", mode, onSeek }: Props) {
                 className="t-btn is-main"
                 onClick={() => setPlaying((p) => !p)}
                 aria-label={playing ? "Pause preview" : "Play preview"}
-                data-magnetic
+               
               >
                 {playing ? <IconPause /> : <IconPlay />}
               </button>
-              <button type="button" className="t-btn" onClick={() => go(index + 1)} aria-label="Next edit" data-magnetic>
+              <button type="button" className="t-btn" onClick={() => go(index + 1)} aria-label="Next edit">
                 <IconStepFwd />
               </button>
               <a
@@ -166,8 +157,8 @@ export function WorkWindow({ className = "", mode, onSeek }: Props) {
                 href={edit.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                data-magnetic
-                data-cursor="play"
+               
+               
               >
                 <IconPlay className="watch-ico" /> Watch Edit
                 <span className="sr-only">: {edit.title} (opens Instagram)</span>
@@ -188,7 +179,7 @@ export function WorkWindow({ className = "", mode, onSeek }: Props) {
                 onMouseEnter={() => setHover(i)}
                 onMouseLeave={() => setHover(null)}
               >
-                <button type="button" className="flow-hit" onClick={() => go(i)} aria-label={`Preview ${e.title}`} data-cursor="play">
+                <button type="button" className="flow-hit" onClick={() => go(i)} aria-label={`Preview ${e.title}`}>
                   <EditMedia edit={e} playing={hover === i && i !== active} />
                 </button>
                 <div className="flow-meta">
@@ -202,7 +193,7 @@ export function WorkWindow({ className = "", mode, onSeek }: Props) {
               </li>
             ))}
             <li className="flow-card is-all" data-card={edits.length} data-active={onViewAll ? "" : undefined}>
-              <a className="flow-all" href={work.viewAll} target="_blank" rel="noopener noreferrer" data-magnetic>
+              <a className="flow-all" href={work.viewAll} target="_blank" rel="noopener noreferrer">
                 <span className="flow-all-plus" aria-hidden="true">
                   +
                 </span>

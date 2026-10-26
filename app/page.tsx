@@ -1,6 +1,6 @@
-import Experience from "@/components/Experience";
+import Site from "@/components/Site";
 import { getMediaManifest } from "@/lib/media";
 
 export default function Home() {
-  return <Experience media={getMediaManifest()} />;
+  return <Site media={getMediaManifest()} />;
 }

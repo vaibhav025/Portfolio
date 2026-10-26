@@ -2,29 +2,28 @@
 
 import { useEffect } from "react";
 import { Canvas, useThree } from "@react-three/fiber";
-import { ContactShadows, Environment, Lightformer } from "@react-three/drei";
+import { Environment, Lightformer } from "@react-three/drei";
 import { Laptop } from "./Laptop";
-import { bindGate } from "./sceneState";
 
-/** Stops/starts the R3F loop when the DOM desktop fully covers the canvas. */
-function FrameGate() {
+/** Pause rendering while the tab is hidden (rAF already stops; this also skips the resume burst). */
+function VisibilityGate() {
   const setFrameloop = useThree((s) => s.setFrameloop);
   useEffect(() => {
-    bindGate((on) => setFrameloop(on ? "always" : "never"));
-    return () => bindGate(null);
+    const on = () => setFrameloop(document.hidden ? "never" : "always");
+    document.addEventListener("visibilitychange", on);
+    return () => document.removeEventListener("visibilitychange", on);
   }, [setFrameloop]);
   return null;
 }
 
-/** Fires once the first frame has actually been drawn. */
+/** Fires once the first frame has been drawn, so the canvas can fade in. */
 function ReadySignal({ onReady }: { onReady: () => void }) {
-  const gl = useThree((s) => s.gl);
   useEffect(() => {
     let raf = requestAnimationFrame(() => {
       raf = requestAnimationFrame(onReady);
     });
     return () => cancelAnimationFrame(raf);
-  }, [gl, onReady]);
+  }, [onReady]);
   return null;
 }
 
@@ -32,14 +31,12 @@ export default function LaptopScene({ onReady }: { onReady: () => void }) {
   return (
     <Canvas
       className="scene-canvas"
-      dpr={[1, 1.75]}
+      dpr={[1, 1.6]}
       gl={{ antialias: true, powerPreference: "high-performance", alpha: true }}
-      camera={{ fov: 32, near: 0.01, far: 60, position: [0, 2.35, 7.4] }}
+      camera={{ fov: 32, near: 0.01, far: 60, position: [0, 1.05, 9.2] }}
       aria-hidden="true"
     >
-      <fog attach="fog" args={["#0b0b0d", 9, 22]} />
-
-      {/* soft studio lighting */}
+      <fog attach="fog" args={["#0b0b0d", 11, 24]} />
       <ambientLight intensity={0.08} />
       <spotLight position={[-4, 7, 4]} angle={0.5} penumbra={1} intensity={60} color="#fff3e6" />
       <spotLight position={[5, 3, -5]} angle={0.6} penumbra={1} intensity={45} color="#ff6a3a" />
@@ -54,9 +51,7 @@ export default function LaptopScene({ onReady }: { onReady: () => void }) {
       </Environment>
 
       <Laptop />
-      <ContactShadows position={[0, -0.42, 0]} opacity={0.65} scale={9} blur={2.6} far={2.2} resolution={512} color="#000000" />
-
-      <FrameGate />
+      <VisibilityGate />
       <ReadySignal onReady={onReady} />
     </Canvas>
   );
