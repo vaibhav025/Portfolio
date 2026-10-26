@@ -42,7 +42,7 @@ export default function LaptopScene({ onReady }: { onReady: () => void }) {
   return (
     <Canvas
       className="scene-canvas"
-      dpr={[1, 1.6]}
+      dpr={[1, 1.25]}
       gl={{ antialias: true, powerPreference: "high-performance", alpha: true }}
       camera={{ fov: 32, near: 0.01, far: 60, position: [0, 1.05, 9.2] }}
       aria-hidden="true"

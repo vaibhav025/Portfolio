@@ -154,7 +154,7 @@ export function Laptop() {
   });
 
   const alu = (
-    <meshPhysicalMaterial color={LAPTOP.aluminium} metalness={0.92} roughness={0.34} clearcoat={0.35} clearcoatRoughness={0.4} />
+    <meshStandardMaterial color={LAPTOP.aluminium} metalness={0.92} roughness={0.34} />
   );
 
   return (
@@ -175,7 +175,7 @@ export function Laptop() {
       {/* trackpad */}
       <mesh position={[0, LAPTOP.baseH + 0.0015, 0.66]} rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[1.3, 0.72]} />
-        <meshPhysicalMaterial color="#323238" metalness={0.7} roughness={0.22} clearcoat={0.6} />
+        <meshStandardMaterial color="#323238" metalness={0.7} roughness={0.22} />
       </mesh>
 
       {/* lid, pivoting on the hinge at the back edge */}
@@ -196,7 +196,7 @@ export function Laptop() {
         {/* glossy bezel */}
         <mesh position={[0, 0.005, LAPTOP.lidD / 2]} rotation={[Math.PI / 2, 0, 0]}>
           <planeGeometry args={[LAPTOP.baseW - 0.08, LAPTOP.lidD - 0.08]} />
-          <meshPhysicalMaterial color="#040405" roughness={0.12} metalness={0.2} clearcoat={1} />
+          <meshStandardMaterial color="#040405" roughness={0.12} metalness={0.2} />
         </mesh>
         {/* display: faces the keyboard when closed, the viewer when open */}
         <mesh ref={screen} position={[0, 0.001, LAPTOP.lidD / 2 + 0.03]} rotation={[Math.PI / 2, 0, 0]}>

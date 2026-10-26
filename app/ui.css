@@ -73,10 +73,8 @@
 }
 .fx-grain {
   z-index: 41;
-  inset: -50%;
-  opacity: 0.06;
+  opacity: 0.05;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
-  animation: grain 0.9s steps(6) infinite;
 }
 @keyframes grain {
   0% { transform: translate(0, 0); }
@@ -133,10 +131,8 @@
   gap: 2px;
   padding: 4px;
   border-radius: 999px;
-  background: rgb(20 20 23 / 0.7);
+  background: rgb(20 20 23 / 0.92);
   border: 1px solid var(--color-line);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
 }
 .hud-nav a {
   display: block;
@@ -338,9 +334,7 @@
   flex-direction: column;
   min-width: 0;
   border-radius: 16px;
-  background: rgb(18 18 22 / 0.8);
-  backdrop-filter: blur(24px) saturate(1.2);
-  -webkit-backdrop-filter: blur(24px) saturate(1.2);
+  background: rgb(18 18 22 / 0.94);
   border: 1px solid rgb(236 230 218 / 0.09);
   box-shadow:
     inset 0 1px 0 rgb(255 255 255 / 0.05),

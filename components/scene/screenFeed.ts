@@ -3,7 +3,8 @@ import * as THREE from "three";
 /* ---------- tweakables ---------- */
 const W = 1280;
 const H = 800;
-const FPS = 30; // redraw rate of the screen canvas
+const FPS = 24; // redraw rate of the screen canvas
+const RES = 0.5; // texture resolution vs. design size (smaller = cheaper GPU upload)
 const GROUND = 700; // where the buddy's feet are
 const WALK_SPEED = 190; // px per second
 const BODY_SHADE = "#cfc6b4";
@@ -57,9 +58,10 @@ export class ScreenFeed {
 
   constructor() {
     const c = document.createElement("canvas");
-    c.width = W;
-    c.height = H;
+    c.width = W * RES;
+    c.height = H * RES;
     this.ctx = c.getContext("2d")!;
+    this.ctx.setTransform(RES, 0, 0, RES, 0, 0); // draw in design units
     this.wall = paintWallpaper();
     // use the page's own font (next/font gives it a hashed family name)
     this.font = getComputedStyle(document.body).fontFamily || "system-ui, sans-serif";
