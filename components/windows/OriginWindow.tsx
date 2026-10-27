@@ -1,5 +1,4 @@
-import Image from "next/image";
-import { origin, profile } from "@/lib/content";
+import { origin } from "@/lib/content";
 import { WindowFrame } from "./WindowFrame";
 
 /** Memories: a contact sheet. One real photo, the rest are typographic frames. */
@@ -24,8 +23,17 @@ export function OriginWindow({ className = "" }: { className?: string }) {
 
         <ol className="origin-sheet">
           <li className="origin-frame is-photo" data-frame>
-            <div className="origin-photo">
-              <Image src={profile.portrait} alt="Vaibhav Singla" width={480} height={480} sizes="(min-width: 900px) 220px, 45vw" />
+            {/* spinning film reel stands in until real photos are added */}
+            <div className="origin-reel" aria-hidden="true">
+              <svg viewBox="0 0 100 100" className="reel-spin">
+                <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" strokeWidth="3" />
+                {[0, 60, 120, 180, 240, 300].map((a) => (
+                  <circle key={a} cx={50 + 26 * Math.cos((a * Math.PI) / 180)} cy={50 + 26 * Math.sin((a * Math.PI) / 180)} r="9" fill="currentColor" />
+                ))}
+                <circle cx="50" cy="50" r="6" fill="currentColor" />
+              </svg>
+              <span className="origin-reel-k">Roll 01</span>
+              <span className="origin-reel-y">{origin.years}</span>
             </div>
             <span className="origin-fnum">01A</span>
           </li>

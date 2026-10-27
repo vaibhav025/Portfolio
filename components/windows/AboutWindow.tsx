@@ -1,5 +1,4 @@
-import Image from "next/image";
-import { about, profile } from "@/lib/content";
+import { about } from "@/lib/content";
 import { WindowFrame } from "./WindowFrame";
 
 export function AboutWindow({ className = "" }: { className?: string }) {
@@ -26,13 +25,7 @@ export function AboutWindow({ className = "" }: { className?: string }) {
         <article className="about-main">
           <div className="about-head">
             <div className="about-avatar">
-              <Image
-                src={profile.portrait}
-                alt="Portrait of Vaibhav Singla smiling, in a black blazer"
-                width={480}
-                height={480}
-                sizes="(min-width: 900px) 160px, 112px"
-              />
+              <span className="about-mono" aria-hidden="true">VS</span>
               <span className="about-avatar-rec" aria-hidden="true">
                 REC
               </span>
