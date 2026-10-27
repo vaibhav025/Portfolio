@@ -1,6 +1,7 @@
 "use client";
 
 import { profile } from "@/lib/content";
+import { BuddyScreen } from "./BuddyScreen";
 import { IconArrowUpRight, IconPlay } from "./icons";
 
 type Props = {
@@ -44,9 +45,7 @@ export function Hero({ opened, onPlay, cssLaptop }: Props) {
         <div className={`css-laptop ${opened ? "is-open" : ""}`} aria-hidden="true">
           <div className="css-lid">
             <div className="css-screen">
-              <span className="css-screen-rec">
-                <i /> REC
-              </span>
+              <BuddyScreen on={opened} />
             </div>
           </div>
           <div className="css-base" />

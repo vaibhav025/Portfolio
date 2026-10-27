@@ -6,14 +6,13 @@ import { WindowFrame } from "./WindowFrame";
  * clips occupy fixed spans of the sequence defined by CLIP_SPANS (0..1).
  */
 export const CLIP_SPANS: [number, number][] = [
-  [0.0, 0.02],
   [0.02, 0.36],
   [0.34, 0.68],
   [0.66, 0.98],
 ];
 
 const TRACK_ROWS = ["V2", "V1", "A1"] as const;
-const COLORS = ["#ff4d1f", "#3fb6c9", "#7a6cff", "#4dffb0"];
+const COLORS = ["#3fb6c9", "#7a6cff", "#4dffb0"];
 
 export function ExperienceWindow({ className = "", vertical = false }: { className?: string; vertical?: boolean }) {
   return (

@@ -10,6 +10,8 @@ export const POSES: Record<string, Pose> = {
   hero: { x: 2.1, y: -0.15, s: 1, ry: -0.55, rx: 0.12, dive: 0, lid: 1 },
   about: { x: -2.35, y: -0.1, s: 0.82, ry: 0.62, rx: 0.08, dive: 0, lid: 1 },
   experience: { x: 2.4, y: 0, s: 0.78, ry: -0.7, rx: 0.1, dive: 0, lid: 1 },
+  // stays out of the way while the role cards play
+  now: { x: 3.6, y: -1.4, s: 0.55, ry: -0.9, rx: 0.2, dive: 0, lid: 1 },
   origin: { x: -2.4, y: 0.15, s: 0.74, ry: 0.75, rx: 0.12, dive: 0, lid: 1 },
   // the camera goes inside the screen: the Work section plays "on" the laptop
   work: { x: 0, y: 0, s: 1, ry: 0, rx: 0, dive: 1, lid: 1 },

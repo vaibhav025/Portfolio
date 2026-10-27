@@ -24,7 +24,7 @@ export const about = {
 
 export type Clip = {
   id: string;
-  track: "V1" | "V2" | "V3" | "A1";
+  track: "V1" | "V2" | "A1";
   title: string;
   body: string;
   tags?: string[];
@@ -32,18 +32,11 @@ export type Clip = {
 
 export const experience: Clip[] = [
   {
-    id: "current-roles",
-    track: "V3",
-    title: "Current Roles",
-    body: "Social Media Lead at ACM, Social Media Lead at the CyberSecurity Club, and Executive at TechSpace.",
-    tags: ["ACM · Social Media Lead", "CyberSecurity Club · Social Media Lead", "TechSpace · Executive"],
-  },
-  {
     id: "lead-editor",
     track: "V1",
     title: "Lead Video Editor",
-    body: "Started as a video editor in school and currently serving as the Lead Editor for major college technical societies, including ACM, IEEE, and TechSpace.",
-    tags: ["ACM", "IEEE", "TechSpace"],
+    body: "Started as a video editor in school, then served as the Lead Video Editor in my first year for ACM, IEEE, IETE and TechSpace.",
+    tags: ["1st year", "ACM", "IEEE", "IETE", "TechSpace"],
   },
   {
     id: "team-lead",
@@ -171,6 +164,13 @@ export const contact = {
     { handle: "@kyayaar.vaibhav", href: "https://www.instagram.com/kyayaar.vaibhav/" },
   ],
 };
+
+/** current positions, shown one by one in the "Now Playing" section */
+export const nowRoles = [
+  { org: "ACM", role: "Social Media Lead", grade: ["#ff4d1f", "#2a0d06"] },
+  { org: "CyberSecurity Club", role: "Social Media Lead", grade: ["#4dffb0", "#04140d"] },
+  { org: "TechSpace", role: "Executive", grade: ["#7a6cff", "#0b0920"] },
+] as const;
 
 export const nav = [
   { label: "Home", scene: "intro" },

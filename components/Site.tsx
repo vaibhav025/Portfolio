@@ -12,6 +12,7 @@ import { TerminalWindow } from "@/components/windows/TerminalWindow";
 import { WorkWindow } from "@/components/windows/WorkWindow";
 import { Hero } from "@/components/ui/Hero";
 import { Hud } from "@/components/ui/Hud";
+import { NowPlaying } from "@/components/ui/NowPlaying";
 import { Outro } from "@/components/ui/Outro";
 import { Overlays } from "@/components/ui/Overlays";
 import { MediaProvider, type MediaManifest } from "@/lib/mediaContext";
@@ -177,6 +178,7 @@ export default function Site({ media }: { media: MediaManifest }) {
           <div className="sec side-left reveal" data-pose="experience" data-scene="experience">
             <ExperienceWindow vertical />
           </div>
+          <NowPlaying />
           <div className="sec side-right reveal" data-pose="origin" data-scene="about">
             <OriginWindow />
           </div>
